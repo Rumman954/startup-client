@@ -287,12 +287,19 @@ const Home = () => {
               { icon: FiUsers, title: 'Build Great Teams', desc: 'Founders can recruit top talent and grow their startup with the right people.' },
               { icon: FiTrendingUp, title: 'Grow Together', desc: 'Join a community of innovators building the next generation of startups.' },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center p-6 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-orange-200 dark:hover:border-orange-500/30 hover:shadow-lg transition-all bg-white dark:bg-slate-800/50">
-                <div className="w-14 h-14 bg-orange-100 dark:bg-orange-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <Icon className="text-orange-500" size={24} />
+              <div
+                key={title}
+                className="group text-center p-6 rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/50 cursor-default transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 dark:hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5 hover:bg-orange-50/50 dark:hover:bg-slate-800"
+              >
+                <div className="w-14 h-14 bg-orange-100 dark:bg-orange-500/10 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-orange-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
+                  <Icon className="text-orange-500 transition-colors duration-300 group-hover:text-white" size={24} />
                 </div>
-                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white">{title}</h3>
-                <p className="text-slate-600 dark:text-slate-400 text-sm">{desc}</p>
+                <h3 className="font-bold text-lg mb-2 text-slate-900 dark:text-white transition-colors duration-300 group-hover:text-orange-500 dark:group-hover:text-orange-400">
+                  {title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 text-sm transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                  {desc}
+                </p>
               </div>
             ))}
           </div>
