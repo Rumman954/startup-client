@@ -47,25 +47,25 @@ const Register = () => {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Create Account</h1>
-          <p className="text-slate-600 mt-2">Join StartupForge today</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Create Account</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-2">Join StartUp Labs today</p>
         </div>
         <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
               <input type="text" required className="input-field" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
               <input type="email" required className="input-field" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Image URL</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Image URL</label>
               <input type="url" className="input-field" placeholder="https://..." value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
               <input type="password" required className="input-field" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
               <p className="text-xs text-slate-500 mt-1">Min 6 chars, 1 uppercase, 1 lowercase</p>
             </div>
@@ -90,7 +90,7 @@ const Register = () => {
               {loading ? 'Creating account...' : 'Register'}
             </button>
           </form>
-          <p className="text-center text-sm text-slate-600 mt-6">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-6">
             Already have an account? <Link to="/login" className="text-indigo-600 font-semibold hover:underline">Login</Link>
           </p>
         </div>

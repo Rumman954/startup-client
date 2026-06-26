@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import MainLayout from './components/MainLayout';
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import PrivateRoute from './components/PrivateRoute';
@@ -29,9 +30,10 @@ import Transactions from './pages/admin/Transactions';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Toaster position="top-right" />
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Toaster position="top-right" />
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
@@ -69,6 +71,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

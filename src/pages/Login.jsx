@@ -41,17 +41,17 @@ const Login = () => {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Welcome Back</h1>
-          <p className="text-slate-600 mt-2">Sign in to your StartupForge account</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Welcome Back</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-2">Sign in to your StartUp Labs account</p>
         </div>
         <div className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
               <input type="email" required className="input-field" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
               <input type="password" required className="input-field" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full disabled:opacity-50">
@@ -60,12 +60,12 @@ const Login = () => {
           </form>
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200" /></div>
-            <div className="relative flex justify-center text-sm"><span className="px-2 bg-white text-slate-500">Or continue with</span></div>
+            <div className="relative flex justify-center text-sm"><span className="px-2 bg-white dark:bg-slate-800 text-slate-500">Or continue with</span></div>
           </div>
-          <button onClick={handleGoogle} className="w-full flex items-center justify-center gap-2 border border-slate-300 rounded-lg py-2.5 hover:bg-slate-50 transition-colors font-medium">
+          <button onClick={handleGoogle} className="w-full flex items-center justify-center gap-2 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors font-medium text-slate-700 dark:text-slate-200">
             <FcGoogle size={20} /> Google
           </button>
-          <p className="text-center text-sm text-slate-600 mt-6">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-6">
             Don&apos;t have an account? <Link to="/register" className="text-indigo-600 font-semibold hover:underline">Register</Link>
           </p>
         </div>
