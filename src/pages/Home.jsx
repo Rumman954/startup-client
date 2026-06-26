@@ -6,8 +6,30 @@ import api from '../lib/api';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const HERO_SLIDES = [
-  { src: '/hero-technology.png', alt: 'Human and robotic hand collaboration' },
-  { src: '/hero-world.png', alt: 'Global technology network' },
+  {
+    src: '/hero-technology.png',
+    alt: 'Human and robotic hand collaboration',
+    align: 'left',
+    title: 'StartUp Labs',
+    subtitle: 'Startup Team Building & Digital Collaboration',
+    tagline: 'Building Tomorrow\'s Teams Today',
+    description:
+      'Where human creativity meets technology. Founders recruit developers, designers, and marketers to build the next generation of startups together.',
+    primaryCta: { label: 'Opportunities', to: '/opportunities' },
+    secondaryCta: { label: 'Startups', to: '/startups' },
+  },
+  {
+    src: '/hero-world.png',
+    alt: 'Global technology network',
+    align: 'right',
+    title: 'StartUp Labs',
+    subtitle: 'Global Innovation & Digital Connectivity',
+    tagline: 'Connecting Founders Across the World',
+    description:
+      'Join a worldwide network of innovators. StartUp Labs bridges talented collaborators and visionary founders across borders to launch bold ideas.',
+    primaryCta: { label: 'Join the Network', to: '/register' },
+    secondaryCta: { label: 'Browse Startups', to: '/startups' },
+  },
 ];
 
 const Home = () => {
@@ -23,7 +45,7 @@ const Home = () => {
 
   const startHeroTimer = useCallback(() => {
     if (heroTimerRef.current) clearInterval(heroTimerRef.current);
-    heroTimerRef.current = setInterval(nextHeroSlide, 3000);
+    heroTimerRef.current = setInterval(nextHeroSlide, 5000);
   }, [nextHeroSlide]);
 
   useEffect(() => {
@@ -58,10 +80,13 @@ const Home = () => {
 
   if (loading) return <LoadingSpinner fullScreen message="Loading StartUp Labs..." />;
 
+  const slide = HERO_SLIDES[heroSlide];
+  const isRight = slide.align === 'right';
+
   return (
     <div>
       {/* Hero with sliding background images */}
-      <section className="relative overflow-hidden min-h-[calc(100vh-4rem)]">
+      <section className="relative overflow-hidden min-h-[560px] sm:min-h-[580px] md:min-h-[610px] lg:min-h-[630px]">
         {/* Clickable slideshow background */}
         <div
           role="button"
@@ -84,57 +109,78 @@ const Home = () => {
           </AnimatePresence>
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30 dark:from-[#0a0f1a]/95 dark:via-[#0a0f1a]/85 dark:to-[#0a0f1a]/40 pointer-events-none" />
-        <div className="absolute inset-0 hero-grid opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/30 pointer-events-none" />
+        <motion.div
+          key={`overlay-${heroSlide}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className={`absolute inset-0 pointer-events-none ${
+            isRight
+              ? 'bg-gradient-to-l from-[#0a0f1a]/95 via-[#0a0f1a]/85 to-[#0a0f1a]/25'
+              : 'bg-gradient-to-r from-[#0a0f1a]/95 via-[#0a0f1a]/85 to-[#0a0f1a]/25'
+          }`}
+        />
+        <div className="absolute inset-0 hero-grid opacity-10 pointer-events-none" />
 
         {/* Slide indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2.5 pointer-events-none">
+        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2.5 pointer-events-none">
           {HERO_SLIDES.map((_, i) => (
             <span
               key={i}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                i === heroSlide ? 'bg-orange-500 scale-110' : 'bg-white/50 dark:bg-slate-500'
+                i === heroSlide ? 'bg-orange-500 scale-110' : 'bg-white/40'
               }`}
             />
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10 pointer-events-none">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-2xl pointer-events-auto"
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight text-slate-900 dark:text-white">
-              StartUp Labs
-            </h1>
-            <p className="text-xl md:text-2xl font-bold text-orange-500 mb-3">
-              Startup Team Building &amp; Digital Collaboration
-            </p>
-            <p className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-6">
-              Building Tomorrow&apos;s Teams Today
-            </p>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
-              StartUp Labs is a platform where founders publish startup ideas, build teams, and recruit
-              talented collaborators. Developers, designers, and marketers explore opportunities and
-              apply to join the next big venture.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/opportunities"
-                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-colors shadow-lg"
-              >
-                Opportunities
-              </Link>
-              <Link
-                to="/startups"
-                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-colors shadow-lg"
-              >
-                Startups
-              </Link>
-            </div>
-          </motion.div>
+        <div
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10 pointer-events-none flex ${
+            isRight ? 'justify-end' : 'justify-start'
+          }`}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={heroSlide}
+              initial={{ opacity: 0, x: isRight ? 50 : -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: isRight ? -50 : 50 }}
+              transition={{ duration: 0.6, ease: 'easeInOut' }}
+              className={`pointer-events-auto text-left ${
+                isRight
+                  ? 'ml-auto w-full sm:w-[85%] md:w-[68%] lg:w-[52%] xl:w-[46%] max-w-4xl'
+                  : 'mr-auto w-full sm:w-[88%] md:w-[72%] lg:w-[55%] xl:w-[48%] max-w-3xl'
+              }`}
+            >
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight tracking-tight text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.4)]">
+                StartUp <span className="text-orange-400">Labs</span>
+              </h1>
+              <p className="text-lg md:text-xl lg:text-2xl font-bold text-orange-400 mb-2">
+                {slide.subtitle}
+              </p>
+              <p className="text-base font-semibold text-slate-200 mb-4">
+                {slide.tagline}
+              </p>
+              <p className="text-slate-300 leading-relaxed mb-6 text-base md:text-lg max-w-none">
+                {slide.description}
+              </p>
+              <div className="flex flex-wrap gap-4 justify-start">
+                <Link
+                  to={slide.primaryCta.to}
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-6 rounded-full transition-colors shadow-lg text-sm md:text-base"
+                >
+                  {slide.primaryCta.label}
+                </Link>
+                <Link
+                  to={slide.secondaryCta.to}
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-6 rounded-full transition-colors shadow-lg text-sm md:text-base"
+                >
+                  {slide.secondaryCta.label}
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
