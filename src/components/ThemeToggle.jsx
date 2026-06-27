@@ -9,13 +9,13 @@ const ThemeToggle = ({ className = '' }) => {
       type="button"
       onClick={toggleTheme}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      className={`p-2 rounded-full transition-colors ${
+      className={`p-2.5 rounded-full transition-colors ${
         isDark
-          ? 'text-slate-300 hover:text-white hover:bg-white/10'
-          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+          ? 'text-slate-200 hover:text-white hover:bg-white/10'
+          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
       } ${className}`}
     >
-      {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
+      {isDark ? <FiSun size={22} /> : <FiMoon size={22} />}
     </button>
   );
 };

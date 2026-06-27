@@ -97,114 +97,116 @@ const Navbar = () => {
     setOpen(false);
   };
 
+  const navItemBase =
+    'px-4 py-2 rounded-lg text-[15px] lg:text-base font-semibold tracking-wide transition-all duration-200';
+
   const navLinkClass = ({ isActive }) =>
-    `px-3 py-2 text-sm font-medium transition-colors ${
+    `${navItemBase} ${
       isActive
-        ? 'text-orange-500 dark:text-orange-400'
-        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+        ? 'text-orange-500 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10'
+        : 'text-slate-800 dark:text-slate-100 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-slate-100 dark:hover:bg-white/10'
+    }`;
+
+  const menuButtonClass = (active) =>
+    `${navItemBase} flex items-center gap-1.5 ${
+      active
+        ? 'text-orange-500 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10'
+        : 'text-slate-800 dark:text-slate-100 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-slate-100 dark:hover:bg-white/10'
     }`;
 
   return (
     <nav className="relative bg-white/95 dark:bg-[#0a0f1a]/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-white/5 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <Link to="/" className="flex items-center gap-2">
-            <Logo className="h-10 max-w-[180px] md:max-w-[200px]" />
-          </Link>
+      <div className="flex items-center justify-between h-20 w-full gap-8 px-8 sm:px-10 lg:px-12">
+        <Link to="/" className="flex shrink-0 items-center">
+          <Logo className="h-14 md:h-16 max-w-[220px] md:max-w-[280px]" />
+        </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
-            <div
-              className="relative"
-              onMouseEnter={() => setMegaMenu('about')}
-            >
-              <button
-                type="button"
-                className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
-                  megaMenu === 'about'
-                    ? 'text-orange-500 dark:text-orange-400'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                aria-expanded={megaMenu === 'about'}
-                aria-haspopup="true"
+        <div className="hidden lg:flex items-center gap-6 xl:gap-10 ml-auto mr-4 lg:mr-6">
+            <div className="flex items-center gap-1 xl:gap-2">
+              <div
+                className="relative"
+                onMouseEnter={() => setMegaMenu('about')}
               >
-                About
-                <FiChevronDown
-                  size={14}
-                  className={`transition-transform duration-200 ${megaMenu === 'about' ? 'rotate-180' : ''}`}
-                />
-              </button>
-              {megaMenu === 'about' && (
-                <span
-                  className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
-                  aria-hidden
-                />
-              )}
-            </div>
-
-            <div
-              className="relative"
-              onMouseEnter={() => setMegaMenu('services')}
-            >
-              <button
-                type="button"
-                className={`flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
-                  megaMenu === 'services'
-                    ? 'text-orange-500 dark:text-orange-400'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
-                }`}
-                aria-expanded={megaMenu === 'services'}
-                aria-haspopup="true"
-              >
-                Services
-                <FiChevronDown
-                  size={14}
-                  className={`transition-transform duration-200 ${megaMenu === 'services' ? 'rotate-180' : ''}`}
-                />
-              </button>
-              {megaMenu === 'services' && (
-                <span
-                  className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
-                  aria-hidden
-                />
-              )}
-            </div>
-
-            <NavLink to="/startups" className={navLinkClass}>Startups</NavLink>
-            <NavLink to="/opportunities" className={navLinkClass}>Opportunities</NavLink>
-            {user ? (
-              <>
-                <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
-                <NavLink to="/profile" className={navLinkClass}>Profile</NavLink>
-                <button onClick={handleLogout} className="ml-2 flex items-center gap-1 px-3 py-2 text-sm font-medium text-red-500 dark:text-red-400 hover:text-red-600">
-                  <FiLogOut /> Logout
+                <button
+                  type="button"
+                  className={menuButtonClass(megaMenu === 'about')}
+                  aria-expanded={megaMenu === 'about'}
+                  aria-haspopup="true"
+                >
+                  About
+                  <FiChevronDown
+                    size={16}
+                    className={`opacity-80 transition-transform duration-200 ${megaMenu === 'about' ? 'rotate-180' : ''}`}
+                  />
                 </button>
-              </>
-            ) : (
-              <NavLink to="/login" className={navLinkClass}>Login</NavLink>
-            )}
+                {megaMenu === 'about' && (
+                  <span
+                    className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
+                    aria-hidden
+                  />
+                )}
+              </div>
+
+              <div
+                className="relative"
+                onMouseEnter={() => setMegaMenu('services')}
+              >
+                <button
+                  type="button"
+                  className={menuButtonClass(megaMenu === 'services')}
+                  aria-expanded={megaMenu === 'services'}
+                  aria-haspopup="true"
+                >
+                  Services
+                  <FiChevronDown
+                    size={16}
+                    className={`opacity-80 transition-transform duration-200 ${megaMenu === 'services' ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {megaMenu === 'services' && (
+                  <span
+                    className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
+                    aria-hidden
+                  />
+                )}
+              </div>
+
+              <NavLink to="/startups" className={navLinkClass}>Startups</NavLink>
+              <NavLink to="/opportunities" className={navLinkClass}>Opportunities</NavLink>
+              {user ? (
+                <>
+                  <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
+                  <NavLink to="/profile" className={navLinkClass}>Profile</NavLink>
+                  <button onClick={handleLogout} className={`${navItemBase} flex items-center gap-1.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-300`}>
+                    <FiLogOut size={17} /> Logout
+                  </button>
+                </>
+              ) : (
+                <NavLink to="/login" className={navLinkClass}>Login</NavLink>
+              )}
+            </div>
+
+            <div className="flex items-center gap-5 xl:gap-6 pl-6 xl:pl-8 border-l border-slate-200/80 dark:border-white/15">
+              <ThemeToggle />
+              <a href="tel:+8801605357646" className="flex items-center gap-2 text-[15px] lg:text-base font-medium text-slate-700 dark:text-slate-200 hover:text-orange-500 dark:hover:text-orange-400 transition-colors whitespace-nowrap">
+                <FiPhone className="text-orange-500 shrink-0" size={18} />
+                <span className="hidden xl:inline">+8801605357646</span>
+              </a>
+              <Link
+                to={user ? '/dashboard' : '/register'}
+                className="bg-orange-500 hover:bg-orange-600 text-white text-[15px] lg:text-base font-semibold py-2.5 px-7 rounded-full transition-all shadow-md shadow-orange-500/20 hover:shadow-lg hover:shadow-orange-500/30 whitespace-nowrap"
+              >
+                Let&apos;s Talk
+              </Link>
+            </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <a href="tel:+8801605357646" className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
-              <FiPhone className="text-orange-500" />
-              <span className="hidden xl:inline">+8801605357646</span>
-            </a>
-            <Link
-              to={user ? '/dashboard' : '/register'}
-              className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold py-2.5 px-6 rounded-full transition-colors"
-            >
-              Let&apos;s Talk
-            </Link>
-          </div>
-
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-3 ml-auto mr-4">
             <ThemeToggle />
             <button className="p-2 text-slate-700 dark:text-white" onClick={() => setOpen(!open)}>
               {open ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
-        </div>
       </div>
 
       {megaMenu && (
@@ -212,7 +214,7 @@ const Navbar = () => {
           className="hidden lg:block absolute left-0 right-0 top-full z-50 pt-1"
           onMouseLeave={() => setMegaMenu(null)}
         >
-          <div className="fixed inset-0 top-16 bg-black/40 backdrop-blur-[2px] -z-10" aria-hidden />
+          <div className="fixed inset-0 top-20 bg-black/40 backdrop-blur-[2px] -z-10" aria-hidden />
           <div className="relative bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-white/10 shadow-xl">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
               {megaMenu === 'services' ? (
@@ -276,7 +278,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-              className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300"
+              className={`flex w-full items-center justify-between ${navItemBase} text-slate-800 dark:text-slate-100`}
             >
               About
               <FiChevronDown
@@ -311,7 +313,7 @@ const Navbar = () => {
             <button
               type="button"
               onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-              className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300"
+              className={`flex w-full items-center justify-between ${navItemBase} text-slate-800 dark:text-slate-100`}
             >
               Services
               <FiChevronDown
