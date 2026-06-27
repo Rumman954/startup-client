@@ -97,3 +97,22 @@ html.dark .hero-grid {
 html.dark .page-shell {
   @apply bg-[#0a0f1a];
 }
+
+.services-mega-menu {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.services-mega-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.services-mega-link {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}

@@ -115,7 +115,7 @@ const Navbar = () => {
     }`;
 
   return (
-    <nav className="relative bg-white/95 dark:bg-[#0a0f1a]/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-white/5 transition-colors duration-300">
+    <nav className="relative overflow-visible bg-white/95 dark:bg-[#0a0f1a]/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-white/5 transition-colors duration-300">
       <div className="flex items-center justify-between h-20 w-full gap-8 px-8 sm:px-10 lg:px-12">
         <Link to="/" className="flex shrink-0 items-center">
           <Logo className="h-14 md:h-16 max-w-[220px] md:max-w-[280px]" />
@@ -126,6 +126,7 @@ const Navbar = () => {
               <div
                 className="relative"
                 onMouseEnter={() => setMegaMenu('about')}
+                onMouseLeave={() => setMegaMenu(null)}
               >
                 <button
                   type="button"
@@ -140,10 +141,42 @@ const Navbar = () => {
                   />
                 </button>
                 {megaMenu === 'about' && (
-                  <span
-                    className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
-                    aria-hidden
-                  />
+                  <>
+                    <span
+                      className="absolute left-6 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
+                      aria-hidden
+                    />
+                    <div className="absolute left-0 top-full pt-1 z-50">
+                      <div className="w-[min(calc(100vw-4rem),48rem)] bg-white dark:bg-slate-900 rounded-b-xl border border-slate-200 dark:border-white/10 shadow-xl px-6 py-5">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          {ABOUT_SECTIONS.map((section) => (
+                            <div key={section.title}>
+                              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3 pb-2 border-b border-slate-100 dark:border-white/10">
+                                {section.title}
+                              </h3>
+                              {section.description ? (
+                                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                                  {section.description}
+                                </p>
+                              ) : (
+                                <ul className="space-y-2">
+                                  {section.items.map((item) => (
+                                    <li
+                                      key={item}
+                                      className="text-sm text-slate-500 dark:text-slate-400 leading-snug flex gap-2"
+                                    >
+                                      <span className="text-orange-500 mt-0.5 shrink-0">•</span>
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -211,62 +244,40 @@ const Navbar = () => {
 
       {megaMenu && (
         <div
+          className="hidden lg:block fixed inset-0 top-20 bg-black/40 backdrop-blur-[2px] z-40 pointer-events-none"
+          aria-hidden
+        />
+      )}
+
+      {megaMenu === 'services' && (
+        <div
           className="hidden lg:block absolute left-0 right-0 top-full z-50 pt-1"
+          onMouseEnter={() => setMegaMenu('services')}
           onMouseLeave={() => setMegaMenu(null)}
         >
-          <div className="fixed inset-0 top-20 bg-black/40 backdrop-blur-[2px] -z-10" aria-hidden />
-          <div className="relative bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-white/10 shadow-xl">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-              {megaMenu === 'services' ? (
-                <div className="grid grid-cols-4 gap-8 xl:gap-12">
-                  {SERVICE_COLUMNS.map((column) => (
-                    <div key={column.title}>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 pb-2 border-b border-slate-100 dark:border-white/10">
-                        {column.title}
-                      </h3>
-                      <ul className="space-y-2.5">
-                        {column.items.map((item) => (
-                          <li key={item}>
-                            <Link
-                              to="/register"
-                              className="text-sm text-slate-500 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors leading-snug block"
-                            >
-                              {item}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-12">
-                  {ABOUT_SECTIONS.map((section) => (
-                    <div key={section.title}>
-                      <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 pb-2 border-b border-slate-100 dark:border-white/10">
-                        {section.title}
-                      </h3>
-                      {section.description ? (
-                        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                          {section.description}
-                        </p>
-                      ) : (
-                        <ul className="space-y-2.5">
-                          {section.items.map((item) => (
-                            <li
-                              key={item}
-                              className="text-sm text-slate-500 dark:text-slate-400 leading-snug flex gap-2"
-                            >
-                              <span className="text-orange-500 mt-1 shrink-0">•</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+          <div className="flex justify-center px-6 sm:px-8 lg:px-10">
+            <div className="services-mega-menu w-full max-w-[min(92vw,72rem)] bg-white dark:bg-slate-900 rounded-b-2xl border border-slate-200/80 dark:border-white/10 shadow-2xl px-8 sm:px-10 lg:px-12 py-9 lg:py-10">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+                {SERVICE_COLUMNS.map((column) => (
+                  <div key={column.title}>
+                    <h3 className="services-mega-title text-slate-900 dark:text-white mb-4">
+                      {column.title}
+                    </h3>
+                    <ul className="space-y-3">
+                      {column.items.map((item) => (
+                        <li key={item}>
+                          <Link
+                            to="/register"
+                            className="services-mega-link text-slate-600 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors block"
+                          >
+                            {item}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
