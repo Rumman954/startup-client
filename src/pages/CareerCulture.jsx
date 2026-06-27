@@ -11,20 +11,7 @@ import {
   FiZap,
 } from 'react-icons/fi';
 
-const TEAM_FACES = [
-  'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&h=120&fit=crop',
-  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop',
-];
+const TEAM_FACES = Array.from({ length: 12 }, (_, i) => `/career-hero/hero-${i + 1}.jfif`);
 
 const WHY_JOIN = [
   { icon: FiZap, title: 'Real Ownership', desc: 'Your work. Your call. Real ownership from day one.' },
@@ -73,49 +60,71 @@ const BENEFITS_ROW2 = [
 
 const CareerCulture = () => (
   <div className="bg-white dark:bg-slate-900 transition-colors duration-300">
-    {/* Hero */}
-    <section className="relative overflow-hidden pt-16 pb-20 px-4">
-      <div className="absolute inset-0 opacity-30 dark:opacity-20">
-        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-1 max-w-5xl mx-auto">
-          {TEAM_FACES.map((src, i) => (
-            <img key={i} src={src} alt="" className="w-full aspect-square object-cover rounded-sm" />
-          ))}
-        </div>
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/90 to-white dark:from-slate-900/40 dark:via-slate-900/90 dark:to-slate-900" />
+    {/* Hero — Riseup Labs style: photo grid + white fade + centered text */}
+    <section className="relative overflow-hidden bg-white dark:bg-slate-900 pb-14 sm:pb-16">
+      <div className="px-8 sm:px-10 lg:px-12">
+        <div className="max-w-7xl mx-auto relative">
+          <div aria-hidden className="relative overflow-hidden">
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-1 md:gap-1.5 brightness-[0.65] saturate-[0.7]">
+              {TEAM_FACES.slice(0, 8).map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  className="w-full aspect-[4/5] md:aspect-square object-cover object-top"
+                />
+              ))}
+            </div>
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-1 md:gap-1.5 mt-1 md:mt-1.5 brightness-[0.65] saturate-[0.7]">
+              <div className="hidden md:block md:col-span-2" />
+              {TEAM_FACES.slice(8, 12).map((src, i) => (
+                <img
+                  key={i + 8}
+                  src={src}
+                  alt=""
+                  className="w-full aspect-[4/5] md:aspect-square object-cover object-top"
+                />
+              ))}
+              <div className="hidden md:block md:col-span-2" />
+            </div>
+            <div className="absolute inset-0 bg-slate-900/45 dark:bg-slate-900/65 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/75 to-white dark:from-slate-900/15 dark:via-slate-900/80 dark:to-slate-900 pointer-events-none" />
+          </div>
 
-      <div className="relative max-w-3xl mx-auto text-center">
-        <p className="text-lg sm:text-xl md:text-2xl font-bold mb-6 tracking-tight">
-          <span className="text-orange-500">Career</span>
-          <span className="text-slate-700 dark:text-slate-300"> & </span>
-          <span className="text-sky-600 dark:text-sky-400">Culture</span>
-        </p>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
-          Do You Love Building Things That Reach Millions?
-        </h1>
-        <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
-          Whether you write code, design experiences, manage operations, or imagine what comes next —
-          there&apos;s a role at StartUp Labs where your skills will matter.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            to="/opportunities"
-            className="inline-flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold pl-6 pr-2 py-2.5 rounded-full hover:opacity-90 transition-opacity"
-          >
-            Join Us
-            <span className="w-9 h-9 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center">
-              <FiArrowRight className="text-slate-900 dark:text-white" />
-            </span>
-          </Link>
-          <Link
-            to="/register"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-700 to-orange-500 text-white font-semibold pl-6 pr-2 py-2.5 rounded-full hover:opacity-95 transition-opacity shadow-lg shadow-orange-500/20"
-          >
-            Explore Life at StartUp Labs
-            <span className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
-              <FiArrowRight />
-            </span>
-          </Link>
+          <div className="relative max-w-3xl mx-auto text-center -mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 px-4">
+            <p className="text-lg sm:text-xl md:text-2xl font-bold mb-6 tracking-tight">
+              <span className="text-orange-500">Career</span>
+              <span className="text-slate-900 dark:text-white"> & </span>
+              <span className="text-sky-700 dark:text-sky-400">Culture</span>
+            </p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
+              Do You Love Building Things That Reach Millions?
+            </h1>
+            <p className="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+              Whether you write code, design experiences, manage operations, or imagine what comes next —
+              there&apos;s a role at StartUp Labs where your skills will matter.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                to="/opportunities"
+                className="inline-flex items-center gap-3 bg-slate-900 text-white font-semibold pl-6 pr-2 py-2.5 rounded-full hover:bg-slate-800 transition-colors"
+              >
+                Join Us
+                <span className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <FiArrowRight className="text-slate-900" />
+                </span>
+              </Link>
+              <Link
+                to="/register"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-800 to-orange-500 text-white font-semibold pl-6 pr-2 py-2.5 rounded-full hover:opacity-95 transition-opacity shadow-md shadow-orange-500/20"
+              >
+                Explore Life at StartUp Labs
+                <span className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0">
+                  <FiArrowRight className="text-orange-500" />
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>
