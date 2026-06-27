@@ -88,6 +88,7 @@ const Navbar = () => {
   const [megaMenu, setMegaMenu] = useState(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileCareerOpen, setMobileCareerOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -205,7 +206,50 @@ const Navbar = () => {
               </div>
 
               <NavLink to="/startups" className={navLinkClass}>Startups</NavLink>
-              <NavLink to="/opportunities" className={navLinkClass}>Opportunities</NavLink>
+
+              <div
+                className="relative"
+                onMouseEnter={() => setMegaMenu('career')}
+                onMouseLeave={() => setMegaMenu(null)}
+              >
+                <button
+                  type="button"
+                  className={menuButtonClass(megaMenu === 'career')}
+                  aria-expanded={megaMenu === 'career'}
+                  aria-haspopup="true"
+                >
+                  Career
+                  <FiChevronDown
+                    size={16}
+                    className={`opacity-80 transition-transform duration-200 ${megaMenu === 'career' ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                {megaMenu === 'career' && (
+                  <>
+                    <span
+                      className="absolute left-1/2 -translate-x-1/2 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
+                      aria-hidden
+                    />
+                    <div className="absolute left-0 top-full pt-1 z-50">
+                      <div className="min-w-[220px] bg-white dark:bg-slate-900 rounded-b-xl border border-slate-200 dark:border-white/10 shadow-xl py-2 overflow-hidden">
+                        <Link
+                          to="/career-culture"
+                          className="block px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-orange-500/10 hover:text-orange-500 transition-colors"
+                        >
+                          Career & Culture
+                        </Link>
+                        <Link
+                          to="/opportunities"
+                          className="block px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-orange-50 dark:hover:bg-orange-500/10 hover:text-orange-500 transition-colors"
+                        >
+                          Jobs
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
               {user ? (
                 <>
                   <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
@@ -359,8 +403,39 @@ const Navbar = () => {
             )}
           </div>
 
+          <div>
+            <button
+              type="button"
+              onClick={() => setMobileCareerOpen(!mobileCareerOpen)}
+              className={`flex w-full items-center justify-between ${navItemBase} text-slate-800 dark:text-slate-100`}
+            >
+              Career
+              <FiChevronDown
+                size={16}
+                className={`transition-transform duration-200 ${mobileCareerOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+            {mobileCareerOpen && (
+              <div className="mt-1 mb-2 rounded-xl border border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-slate-800/50 py-1">
+                <Link
+                  to="/career-culture"
+                  className="block px-5 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:text-orange-500"
+                  onClick={() => { setOpen(false); setMobileCareerOpen(false); }}
+                >
+                  Career & Culture
+                </Link>
+                <Link
+                  to="/opportunities"
+                  className="block px-5 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:text-orange-500"
+                  onClick={() => { setOpen(false); setMobileCareerOpen(false); }}
+                >
+                  Jobs
+                </Link>
+              </div>
+            )}
+          </div>
+
           <NavLink to="/startups" className={navLinkClass} onClick={() => setOpen(false)}>Startups</NavLink>
-          <NavLink to="/opportunities" className={navLinkClass} onClick={() => setOpen(false)}>Opportunities</NavLink>
           {user ? (
             <>
               <NavLink to="/dashboard" className={navLinkClass} onClick={() => setOpen(false)}>Dashboard</NavLink>

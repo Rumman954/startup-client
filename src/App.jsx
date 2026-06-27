@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import BrowseStartups from './pages/BrowseStartups';
 import StartupDetails from './pages/StartupDetails';
 import BrowseOpportunities from './pages/BrowseOpportunities';
+import CareerCulture from './pages/CareerCulture';
 import OpportunityDetails from './pages/OpportunityDetails';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
@@ -40,6 +41,7 @@ function App() {
             <Route path="startups" element={<BrowseStartups />} />
             <Route path="startups/:id" element={<StartupDetails />} />
             <Route path="opportunities" element={<BrowseOpportunities />} />
+            <Route path="career-culture" element={<CareerCulture />} />
             <Route path="opportunities/:id" element={<OpportunityDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
