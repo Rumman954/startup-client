@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../../lib/api';
+import { uploadImageFile } from '../../lib/uploadImage';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
@@ -36,16 +37,12 @@ const MyStartup = () => {
     if (!file) return;
     setUploading(true);
     try {
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const { data } = await api.post('/api/upload/image', { image: reader.result.split(',')[1] });
-        setForm((f) => ({ ...f, logo: data.url }));
-        toast.success('Logo uploaded!');
-        setUploading(false);
-      };
-      reader.readAsDataURL(file);
+      const url = await uploadImageFile(file);
+      setForm((f) => ({ ...f, logo: url }));
+      toast.success('Logo uploaded!');
     } catch (err) {
       toast.error(err.message);
+    } finally {
       setUploading(false);
     }
   };

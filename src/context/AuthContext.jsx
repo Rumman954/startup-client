@@ -31,6 +31,16 @@ export const AuthProvider = ({ children }) => {
       try {
         const session = await authClient.getSession();
         if (session?.data?.user) {
+          const pendingRole = sessionStorage.getItem('pendingRole');
+          if (pendingRole) {
+            await api.post('/api/jwt/sync-user', {
+              name: session.data.user.name,
+              email: session.data.user.email,
+              image: session.data.user.image || '',
+              role: pendingRole,
+            });
+            sessionStorage.removeItem('pendingRole');
+          }
           await issueJwt();
         } else {
           await fetchUser();

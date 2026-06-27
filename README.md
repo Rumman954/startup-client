@@ -1,6 +1,6 @@
 # StartupForge Client
 
-Frontend for the StartupForge — Startup Team Builder Platform.
+Frontend for the StartupForge — Startup Team Builder Platform (StartUp Labs branding).
 
 ## Tech Stack
 
@@ -14,17 +14,9 @@ Frontend for the StartupForge — Startup Team Builder Platform.
 
 ## Setup
 
-1. Clone the repository
-2. Copy `.env.example` to `.env`
-3. Install dependencies:
-
 ```bash
+cp .env.example .env
 npm install
-```
-
-4. Start development server:
-
-```bash
 npm run dev
 ```
 
@@ -32,33 +24,41 @@ npm run dev
 
 | Variable | Description |
 |----------|-------------|
-| `VITE_API_URL` | Backend API URL |
+| `VITE_API_URL` | Backend API URL (e.g. `http://localhost:5000` or Render URL) |
 
 ## Features
 
-- Public pages: Home, Browse Startups, Browse Opportunities
-- Authentication: Login, Register (Credential + Google)
-- Founder Dashboard: Startup profile, opportunities, applications
-- Collaborator Dashboard: Browse & apply, track applications
-- Admin Dashboard: Users, startups, transactions
-- Stripe premium payment integration
-- Server-side pagination & search
-- Framer Motion animations
-- Fully responsive design
+- Public: Home, Browse Startups, Browse Opportunities, Startup/Opportunity Details
+- Auth: Login & Register (Credential + Google OAuth)
+- ImgBB file upload on Register, Profile, and Startup logo
+- Founder / Collaborator / Admin dashboards with charts
+- Stripe premium checkout
+- Server-side pagination, search & filters
+- Framer Motion on Home page
+- Dark / light theme toggle
+- Responsive design (mobile, tablet, desktop)
+- SPA routing: `vercel.json` + `public/_redirects`
 
-## Build
+## Build & Deploy
 
 ```bash
 npm run build
 ```
 
-Deploy to Vercel, Netlify, or Firebase Hosting.
+Deploy to **Vercel** (recommended). Set `VITE_API_URL` to your production API.
+
+See root [DEPLOYMENT.md](../DEPLOYMENT.md) for full instructions.
 
 ## Live Site
 
-Update this URL after deployment.
+| | |
+|---|---|
+| **Production** | _Add your Vercel URL after deployment_ |
+| **GitHub** | https://github.com/Rumman954/startup-client |
 
 ## Admin Credentials
 
-- Email: `admin@startupforge.com` (configure on server)
-- Password: Set via server `ADMIN_PASSWORD` env variable
+| | |
+|---|---|
+| **Email** | `admin@startuplabs.com` |
+| **Password** | `Admin@123` (configured on server `ADMIN_EMAIL` / `ADMIN_PASSWORD`) |
