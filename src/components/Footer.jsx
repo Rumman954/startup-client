@@ -20,6 +20,7 @@ const Footer = () => {
             <h3 className="text-slate-900 dark:text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li><Link to="/" className="hover:text-orange-500 transition-colors">Home</Link></li>
+              <li><Link to="/about" className="hover:text-orange-500 transition-colors">About</Link></li>
               <li><Link to="/startups" className="hover:text-orange-500 transition-colors">Browse Startups</Link></li>
               <li><Link to="/career-culture" className="hover:text-orange-500 transition-colors">Career & Culture</Link></li>
               <li><Link to="/opportunities" className="hover:text-orange-500 transition-colors">Jobs</Link></li>

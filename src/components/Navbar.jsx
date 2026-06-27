@@ -59,35 +59,10 @@ const SERVICE_COLUMNS = [
   },
 ];
 
-const ABOUT_SECTIONS = [
-  {
-    title: 'Our Mission',
-    description:
-      'To empower founders and talented professionals to connect, collaborate, and build impactful startups — bridging human creativity with technology to turn bold ideas into reality.',
-  },
-  {
-    title: 'Our Vision',
-    description:
-      'A world where every innovative startup idea has access to the right team, tools, and global network — making team building seamless, inclusive, and accessible for founders everywhere.',
-  },
-  {
-    title: 'Our Achievements',
-    items: [
-      '500+ Active Startups Registered',
-      '1,200+ Opportunities Posted',
-      '3,000+ Collaborators Onboarded',
-      'Teams Built Across 50+ Countries',
-      'Trusted by Founders & Innovators Worldwide',
-      'Award-Winning Startup Collaboration Platform',
-    ],
-  },
-];
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [megaMenu, setMegaMenu] = useState(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileCareerOpen, setMobileCareerOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -124,62 +99,7 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-6 xl:gap-10 ml-auto mr-4 lg:mr-6">
             <div className="flex items-center gap-1 xl:gap-2">
-              <div
-                className="relative"
-                onMouseEnter={() => setMegaMenu('about')}
-                onMouseLeave={() => setMegaMenu(null)}
-              >
-                <button
-                  type="button"
-                  className={menuButtonClass(megaMenu === 'about')}
-                  aria-expanded={megaMenu === 'about'}
-                  aria-haspopup="true"
-                >
-                  About
-                  <FiChevronDown
-                    size={16}
-                    className={`opacity-80 transition-transform duration-200 ${megaMenu === 'about' ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                {megaMenu === 'about' && (
-                  <>
-                    <span
-                      className="absolute left-6 top-full w-3 h-3 bg-white dark:bg-slate-900 border-l border-t border-slate-200 dark:border-white/10 rotate-45 -mt-1.5 z-[60]"
-                      aria-hidden
-                    />
-                    <div className="absolute left-0 top-full pt-1 z-50">
-                      <div className="w-[min(calc(100vw-4rem),48rem)] bg-white dark:bg-slate-900 rounded-b-xl border border-slate-200 dark:border-white/10 shadow-xl px-6 py-5">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {ABOUT_SECTIONS.map((section) => (
-                            <div key={section.title}>
-                              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3 pb-2 border-b border-slate-100 dark:border-white/10">
-                                {section.title}
-                              </h3>
-                              {section.description ? (
-                                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                                  {section.description}
-                                </p>
-                              ) : (
-                                <ul className="space-y-2">
-                                  {section.items.map((item) => (
-                                    <li
-                                      key={item}
-                                      className="text-sm text-slate-500 dark:text-slate-400 leading-snug flex gap-2"
-                                    >
-                                      <span className="text-orange-500 mt-0.5 shrink-0">•</span>
-                                      <span>{item}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+              <NavLink to="/about" className={navLinkClass}>About</NavLink>
 
               <div
                 className="relative"
@@ -329,40 +249,7 @@ const Navbar = () => {
 
       {open && (
         <div className="lg:hidden border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0f1a] px-4 py-3 space-y-1">
-          <div>
-            <button
-              type="button"
-              onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-              className={`flex w-full items-center justify-between ${navItemBase} text-slate-800 dark:text-slate-100`}
-            >
-              About
-              <FiChevronDown
-                size={16}
-                className={`transition-transform duration-200 ${mobileAboutOpen ? 'rotate-180' : ''}`}
-              />
-            </button>
-            {mobileAboutOpen && (
-              <div className="mt-1 mb-2 space-y-4 rounded-xl border border-slate-100 dark:border-white/10 bg-slate-50 dark:bg-slate-800/50 p-4">
-                {ABOUT_SECTIONS.map((section) => (
-                  <div key={section.title}>
-                    <p className="text-sm font-bold text-slate-900 dark:text-white mb-2">{section.title}</p>
-                    {section.description ? (
-                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{section.description}</p>
-                    ) : (
-                      <ul className="space-y-1.5 pl-1">
-                        {section.items.map((item) => (
-                          <li key={item} className="text-sm text-slate-500 dark:text-slate-400 flex gap-2">
-                            <span className="text-orange-500 shrink-0">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <NavLink to="/about" className={navLinkClass} onClick={() => setOpen(false)}>About</NavLink>
 
           <div>
             <button
