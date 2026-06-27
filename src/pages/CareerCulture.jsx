@@ -10,6 +10,7 @@ import {
   FiUsers,
   FiZap,
 } from 'react-icons/fi';
+import { FaFacebookF } from 'react-icons/fa';
 
 const TEAM_FACES = Array.from({ length: 12 }, (_, i) => `/career-hero/hero-${i + 1}.jfif`);
 
@@ -24,17 +25,17 @@ const WHY_JOIN = [
 
 const BENEFITS_ROW1 = [
   {
-    img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-1.jpg?v=2',
     title: 'Work-Life Balance',
     desc: 'Enjoy fair leave, paid holidays, vacations, and time to truly recharge.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-2.jpg',
     title: 'Competitive Salary & Rewards',
     desc: 'Get competitive pay, meaningful benefits, and bonuses that recognize your impact.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-3.webp?v=2',
     title: 'Family Health Support',
     desc: 'Protect your loved ones with health coverage that supports real peace of mind.',
   },
@@ -42,17 +43,17 @@ const BENEFITS_ROW1 = [
 
 const BENEFITS_ROW2 = [
   {
-    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-4.jpg',
     title: 'Continuous Learning',
     desc: 'Build new skills through training, mentorship, certifications, and growth-focused support.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-5.jpg',
     title: 'Open Work Culture',
     desc: 'Work in a culture where ideas move freely, voices matter, and teams collaborate openly.',
   },
   {
-    img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=360&fit=crop',
+    img: '/benefits/benefit-6.jpg',
     title: 'Performance Appreciation',
     desc: 'Feel valued through regular appreciation, recognition, and support for your best work.',
   },
@@ -129,56 +130,109 @@ const CareerCulture = () => (
       </div>
     </section>
 
-    {/* Community banner */}
-    <section className="px-4 sm:px-6 lg:px-8 pb-16">
-      <div className="max-w-6xl mx-auto rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row items-center">
-        <div className="flex-1 p-8 md:p-12">
-          <h2 className="text-2xl md:text-3xl font-bold leading-snug mb-6">
-            <span className="text-slate-900 dark:text-white">Connect With the </span>
-            <span className="text-orange-500">StartUp Labs </span>
-            <span className="text-sky-600 dark:text-sky-400">Career </span>
-            <span className="text-slate-900 dark:text-white">Community</span>
+    {/* Community banner — near full-width with small side gaps */}
+    <section className="px-3 sm:px-4 lg:px-5 py-10 sm:py-12 lg:py-14">
+      <div className="w-full rounded-2xl overflow-hidden bg-white dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 shadow-sm dark:shadow-none grid md:grid-cols-2 items-stretch">
+        <div className="p-10 md:py-12 md:pl-12 md:pr-4 lg:p-14 lg:pr-6 flex flex-col justify-center bg-white dark:bg-transparent">
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold leading-[1.12] tracking-tight mb-8">
+            <span className="block text-slate-900 dark:text-white">Connect With the</span>
+            <span className="block">
+              <span className="text-orange-500">S</span>
+              <span className="text-[#b45309] dark:text-[#d97706]">tartUp </span>
+              <span className="text-[#8b7ab8] dark:text-[#a78bfa]">Labs </span>
+              <span className="text-sky-600 dark:text-sky-400">Career</span>
+            </span>
+            <span className="block text-slate-900 dark:text-white">Community</span>
           </h2>
-          <div className="flex flex-wrap items-center gap-6">
-            <div className="px-4 py-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-600 text-sm font-semibold text-green-600">
-              Glassdoor ★★★★★
-            </div>
-            <div className="px-4 py-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-600 text-sm font-medium text-slate-600 dark:text-slate-300">
-              Review us on Google
-            </div>
-            <div className="px-4 py-2 bg-[#0A66C2] text-white rounded-lg text-sm font-medium">
-              Connect on LinkedIn
-            </div>
+          <div className="flex flex-wrap items-stretch gap-4 sm:gap-5">
+            <a
+              href="https://www.facebook.com/mdabutalha.rumman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center gap-1 min-w-[8.5rem] sm:min-w-[9.5rem] px-5 py-3.5 bg-[#1877F2] rounded-lg min-h-[4.75rem] hover:opacity-95 transition-opacity"
+            >
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] sm:text-xs font-medium text-white/90 leading-none ml-9 sm:ml-10">
+                  Follow us on
+                </span>
+                <div className="flex items-center gap-2">
+                <span className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white shrink-0">
+                  <FaFacebookF className="text-[#1877F2] text-base sm:text-lg" aria-hidden />
+                </span>
+                <span className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">
+                  Facebook
+                </span>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="https://www.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-[2px] rounded-lg bg-gradient-to-r from-[#4285F4] via-[#FBBC05] to-[#34A853] hover:opacity-95 transition-opacity"
+            >
+              <div className="flex flex-col items-center justify-center gap-1 min-w-[8.5rem] sm:min-w-[9.5rem] px-5 py-3.5 bg-white dark:bg-slate-800 rounded-[6px] text-center min-h-[4.75rem]">
+                <span className="text-[11px] sm:text-xs font-medium text-slate-500 dark:text-slate-400 leading-none">
+                  Review us on
+                </span>
+                <span className="text-base sm:text-lg font-semibold tracking-tight leading-tight">
+                  <span className="text-[#4285F4]">G</span>
+                  <span className="text-[#EA4335]">o</span>
+                  <span className="text-[#FBBC05]">o</span>
+                  <span className="text-[#4285F4]">g</span>
+                  <span className="text-[#34A853]">l</span>
+                  <span className="text-[#EA4335]">e</span>
+                </span>
+              </div>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/md-abu-talha-rumman/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center gap-1 min-w-[8.5rem] sm:min-w-[9.5rem] px-5 py-3.5 bg-[#0A66C2] rounded-lg text-center min-h-[4.75rem] hover:opacity-95 transition-opacity"
+            >
+              <span className="text-[11px] sm:text-xs font-medium text-white/90 leading-none">
+                Connect with us on
+              </span>
+              <span className="text-base sm:text-lg font-bold text-white leading-tight">
+                Linked
+                <span className="inline-flex items-center justify-center bg-white text-[#0A66C2] text-sm font-bold px-1 rounded-sm ml-0.5">
+                  in
+                </span>
+              </span>
+            </a>
           </div>
         </div>
-        <div className="w-full md:w-[45%] h-56 md:h-72 relative">
+        <div className="w-full relative min-h-[17rem] sm:min-h-[20rem] md:min-h-[22rem] lg:min-h-[26rem]">
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop"
             alt="StartUp Labs team"
-            className="absolute inset-0 w-full h-full object-cover md:rounded-l-3xl"
+            className="absolute inset-0 w-full h-full object-cover object-center dark:brightness-100"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-50 dark:from-slate-800/80 to-transparent md:block hidden" />
+          <div className="absolute inset-0 hidden md:block bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,0.75)_8%,rgba(255,255,255,0.25)_22%,transparent_38%)] dark:bg-[linear-gradient(to_right,rgba(30,41,59,0.95)_0%,rgba(30,41,59,0.5)_18%,rgba(30,41,59,0.12)_35%,transparent_50%)]" />
         </div>
       </div>
     </section>
 
     {/* Why People Join Us */}
-    <section className="px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-r from-sky-50/80 to-white dark:from-slate-800/30 dark:to-slate-900">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <p className="text-lg sm:text-xl md:text-2xl font-bold mb-4 tracking-tight">
+    <section className="px-3 sm:px-4 lg:px-5 py-12 sm:py-14 lg:py-16 bg-white dark:bg-slate-900">
+      <div className="w-full grid lg:grid-cols-[1fr_1.55fr] gap-8 lg:gap-12 xl:gap-14 items-center">
+        <div className="why-join-copy max-w-lg lg:max-w-xl pl-10 md:pl-12 lg:pl-14">
+          <p className="text-2xl sm:text-[1.65rem] lg:text-[1.75rem] font-bold mb-5 tracking-tight leading-snug">
             <span className="text-orange-500">Why People </span>
             <span className="text-sky-700 dark:text-sky-400">Join Us</span>
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.15rem] font-extrabold text-slate-900 dark:text-white leading-[1.12] tracking-tight mb-7">
             Six Reasons Our Team Stays – and Grows.
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg sm:text-xl font-medium">
             Because a great career isn&apos;t something that happens to you — it&apos;s something you build.
             Here&apos;s how we help.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pr-10 md:pr-12 lg:pr-14">
           {WHY_JOIN.map(({ icon: Icon, title, desc }, i) => (
             <motion.div
               key={title}
@@ -186,15 +240,15 @@ const CareerCulture = () => (
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="group bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 cursor-default transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 dark:hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5 hover:bg-orange-50/50 dark:hover:bg-slate-800"
+              className="group rounded-2xl p-6 sm:p-7 bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700 cursor-default transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 dark:hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5 hover:bg-orange-50/60 dark:hover:bg-slate-800"
             >
-              <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center mb-3 transition-all duration-300 group-hover:bg-orange-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
-                <Icon className="text-orange-600 dark:text-orange-400 transition-colors duration-300 group-hover:text-white" size={18} />
+              <div className="w-12 h-12 rounded-full bg-[#FFD8C4] dark:bg-orange-400/30 flex items-center justify-center mb-5 transition-all duration-300 group-hover:bg-orange-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
+                <Icon className="text-slate-900 dark:text-white transition-colors duration-300 group-hover:text-white" size={22} />
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-white text-base mb-2 transition-colors duration-300 group-hover:text-orange-500 dark:group-hover:text-orange-400">
+              <h3 className="font-bold text-slate-900 dark:text-white text-lg mb-2.5 leading-snug transition-colors duration-300 group-hover:text-orange-500 dark:group-hover:text-orange-400">
                 {title}
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+              <p className="text-sm sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
                 {desc}
               </p>
             </motion.div>
@@ -222,15 +276,21 @@ const CareerCulture = () => (
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="group"
               >
-                <img
-                  src={img}
-                  alt={title}
-                  className="w-full h-52 object-cover rounded-lg mb-4 group-hover:opacity-95 transition-opacity"
-                />
-                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2">{title}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{desc}</p>
+                <div className="group relative overflow-hidden rounded-lg mb-4">
+                  <img
+                    src={img}
+                    alt={title}
+                    className="w-full h-52 object-cover transition-transform duration-500 ease-out group-hover:scale-[1.12]"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 pointer-events-none" />
+                </div>
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white mb-2">
+                  {title}
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {desc}
+                </p>
               </motion.div>
             ))}
           </div>

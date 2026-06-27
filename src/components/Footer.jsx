@@ -38,9 +38,33 @@ const Footer = () => {
           <div>
             <h3 className="text-slate-900 dark:text-white font-semibold mb-4">Follow Us</h3>
             <div className="flex gap-4">
-              <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors"><FiGithub size={22} /></a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors"><FiTwitter size={22} /></a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-orange-500 transition-colors"><FiLinkedin size={22} /></a>
+              <a
+                href="https://github.com/Rumman954"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="hover:text-orange-500 transition-colors"
+              >
+                <FiGithub size={22} />
+              </a>
+              <a
+                href="https://x.com/MdAbuTalhaRumm1"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+                className="hover:text-orange-500 transition-colors"
+              >
+                <FiTwitter size={22} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/md-abu-talha-rumman/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="hover:text-orange-500 transition-colors"
+              >
+                <FiLinkedin size={22} />
+              </a>
             </div>
           </div>
         </div>
