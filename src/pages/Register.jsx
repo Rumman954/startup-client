@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUp, signIn } from '../lib/auth';
 import { useAuth } from '../context/AuthContext';
 import { uploadImageFile } from '../lib/uploadImage';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
+import { FiUser, FiMail, FiImage, FiLock, FiEye, FiEyeOff, FiCheck } from 'react-icons/fi';
 
 const validatePassword = (password) => {
   if (password.length < 6) return 'Password must be at least 6 characters';
@@ -13,11 +14,25 @@ const validatePassword = (password) => {
   return null;
 };
 
+const IconField = ({ icon: Icon, className = '', ...props }) => (
+  <div className="relative">
+    <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-violet-400 pointer-events-none" size={18} />
+    <input
+      className={`w-full pl-11 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all ${className}`}
+      {...props}
+    />
+  </div>
+);
+
 const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', image: '', role: 'collaborator' });
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef(null);
   const { issueJwt, syncUser } = useAuth();
   const navigate = useNavigate();
 
@@ -32,6 +47,7 @@ const Register = () => {
     e.preventDefault();
     const pwdError = validatePassword(form.password);
     if (pwdError) return toast.error(pwdError);
+    if (form.password !== confirmPassword) return toast.error('Passwords do not match');
 
     setLoading(true);
     try {
@@ -77,74 +93,169 @@ const Register = () => {
   const isBusy = loading || uploading;
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-slate-50/80 dark:bg-transparent">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Create Account</h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">Join StartUp Labs today</p>
-        </div>
-        <div className="card p-8">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Name</label>
-              <input type="text" required className="input-field" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
-              <input type="email" required className="input-field" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Profile Image</label>
-              <input type="file" accept="image/*" className="input-field" onChange={handleImageChange} />
-              {form.image && (
-                <img src={form.image} alt="Preview" className="mt-2 w-16 h-16 rounded-full object-cover border border-slate-200 dark:border-slate-600" />
-              )}
-              <p className="text-xs text-slate-500 mt-1">Upload a photo (stored via ImgBB)</p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
-              <input type="password" required className="input-field" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-              <p className="text-xs text-slate-500 mt-1">Min 6 chars, 1 uppercase, 1 lowercase</p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Role</label>
-              <div className="grid grid-cols-2 gap-3">
-                {['founder', 'collaborator'].map((role) => (
-                  <button
-                    key={role}
-                    type="button"
-                    onClick={() => setForm({ ...form, role })}
-                    className={`py-2.5 rounded-lg border-2 font-medium capitalize transition-colors ${
-                      form.role === role
-                        ? 'border-orange-500 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400'
-                        : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:border-slate-300'
-                    }`}
-                  >
-                    {role}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <button type="submit" disabled={isBusy} className="btn-primary w-full disabled:opacity-50">
-              {uploading ? 'Uploading image...' : loading ? 'Creating account...' : 'Register'}
-            </button>
-          </form>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200 dark:border-slate-600" /></div>
-            <div className="relative flex justify-center text-sm"><span className="px-2 bg-white dark:bg-slate-800 text-slate-500">Or continue with</span></div>
-          </div>
-
+        <div className="bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-8 sm:p-10">
           <button
             type="button"
             onClick={handleGoogle}
-            className="w-full flex items-center justify-center gap-2 border border-slate-300 dark:border-slate-600 rounded-lg py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors font-medium text-slate-700 dark:text-slate-200"
+            className="w-full flex items-center justify-center gap-3 border border-slate-200 dark:border-slate-600 rounded-xl py-3 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors font-medium text-slate-700 dark:text-slate-200"
           >
-            <FcGoogle size={20} /> Google
+            <FcGoogle size={22} />
+            Continue with Google
           </button>
 
-          <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-6">
-            Already have an account? <Link to="/login" className="text-orange-500 font-semibold hover:underline">Login</Link>
+          <div className="relative my-7">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200 dark:border-slate-600" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-3 bg-white dark:bg-slate-800 text-slate-400">or</span>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2.5">I am a...</label>
+              <div className="grid grid-cols-2 gap-3">
+                {['founder', 'collaborator'].map((role) => {
+                  const selected = form.role === role;
+                  return (
+                    <button
+                      key={role}
+                      type="button"
+                      onClick={() => setForm({ ...form, role })}
+                      className={`relative py-3 rounded-xl border-2 font-semibold capitalize transition-all ${
+                        selected
+                          ? 'border-violet-500 bg-violet-50 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300'
+                          : 'border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-500'
+                      }`}
+                    >
+                      {role}
+                      {selected && (
+                        <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-violet-500 flex items-center justify-center">
+                          <FiCheck className="text-white" size={12} />
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Full Name</label>
+              <IconField
+                icon={FiUser}
+                type="text"
+                required
+                placeholder="John Doe"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Email</label>
+              <IconField
+                icon={FiMail}
+                type="email"
+                required
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+                Profile Image <span className="font-normal text-slate-400">(optional)</span>
+              </label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full flex items-center gap-3 pl-4 pr-4 py-3 rounded-xl border border-violet-200 dark:border-violet-500/30 bg-violet-50 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 font-medium hover:bg-violet-100 dark:hover:bg-violet-500/20 transition-colors"
+              >
+                <FiImage size={18} className="text-violet-400 shrink-0" />
+                <span className="truncate">{imageFile ? imageFile.name : 'Upload Profile Image'}</span>
+              </button>
+              {form.image && (
+                <img
+                  src={form.image}
+                  alt="Preview"
+                  className="mt-3 w-14 h-14 rounded-full object-cover border-2 border-violet-200 dark:border-violet-500/40"
+                />
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Password</label>
+              <div className="relative">
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-violet-400 pointer-events-none" size={18} />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  placeholder="••••••••"
+                  className="w-full pl-11 pr-11 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                </button>
+              </div>
+              <p className="text-xs text-slate-400 mt-1.5">Min 6 chars, 1 uppercase, 1 lowercase</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">Confirm Password</label>
+              <div className="relative">
+                <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-violet-400 pointer-events-none" size={18} />
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  required
+                  placeholder="••••••••"
+                  className="w-full pl-11 pr-11 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition-all"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                  aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isBusy}
+              className="w-full bg-violet-700 hover:bg-violet-800 dark:bg-violet-600 dark:hover:bg-violet-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-colors shadow-md shadow-violet-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {uploading ? 'Uploading image...' : loading ? 'Creating account...' : 'Create Account 🚀'}
+            </button>
+          </form>
+
+          <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-7">
+            Already have an account?{' '}
+            <Link to="/login" className="text-violet-600 dark:text-violet-400 font-semibold hover:underline">
+              Sign in
+            </Link>
           </p>
         </div>
       </div>
