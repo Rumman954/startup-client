@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { signIn, signInWithGoogle } from '../lib/auth';
+import { signInWithGoogle } from '../lib/auth';
 import { useAuth } from '../context/AuthContext';
 import { checkApiHealth, formatAuthError } from '../lib/authErrors';
+import api from '../lib/api';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
@@ -11,7 +12,7 @@ const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { issueJwt } = useAuth();
+  const { setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (() => {
@@ -32,9 +33,11 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await signIn.email({ email: form.email, password: form.password });
-      if (result.error) throw new Error(result.error.message);
-      await issueJwt();
+      const { data } = await api.post('/api/jwt/login', {
+        email: form.email,
+        password: form.password,
+      });
+      setUser(data.user);
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (err) {
