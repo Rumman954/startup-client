@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import api from '../../lib/api';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+const statusClass = (status) => {
+  if (status === 'accepted') return 'status-accepted';
+  if (status === 'rejected') return 'status-rejected';
+  return 'status-pending';
+};
+
 const MyApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,31 +23,28 @@ const MyApplications = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">My Applications</h1>
+      <h1 className="dashboard-title mb-8">My Applications</h1>
       {applications.length === 0 ? (
-        <p className="text-slate-500">You haven&apos;t applied to any opportunities yet.</p>
+        <div className="empty-state">You haven&apos;t applied to any opportunities yet.</div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full card">
-            <thead className="bg-slate-50 border-b">
+        <div className="premium-table-wrap">
+          <table className="premium-table">
+            <thead>
               <tr>
-                <th className="text-left p-4 text-sm font-semibold text-slate-600">Opportunity</th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-600">Startup</th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-600">Applied Date</th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-600">Status</th>
+                <th>Opportunity</th>
+                <th>Startup</th>
+                <th>Applied Date</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {applications.map((app) => (
-                <tr key={app._id} className="border-b last:border-0">
-                  <td className="p-4 text-sm font-medium">{app.opportunity_id?.role_title}</td>
-                  <td className="p-4 text-sm text-slate-600">{app.opportunity_id?.startup_id?.startup_name}</td>
-                  <td className="p-4 text-sm text-slate-500">{new Date(app.applied_at).toLocaleDateString()}</td>
-                  <td className="p-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${
-                      app.status === 'accepted' ? 'bg-green-100 text-green-700' :
-                      app.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                    }`}>{app.status}</span>
+                <tr key={app._id}>
+                  <td className="font-semibold text-slate-900 dark:text-white">{app.opportunity_id?.role_title}</td>
+                  <td className="text-slate-600 dark:text-slate-400">{app.opportunity_id?.startup_id?.startup_name}</td>
+                  <td className="text-slate-500 dark:text-slate-400">{new Date(app.applied_at).toLocaleDateString()}</td>
+                  <td>
+                    <span className={statusClass(app.status)}>{app.status}</span>
                   </td>
                 </tr>
               ))}

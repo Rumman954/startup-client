@@ -83,21 +83,21 @@ const MyStartup = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">{startup ? 'Manage Startup' : 'Create Startup'}</h1>
+      <h1 className="dashboard-title mb-8">{startup ? 'Manage Startup' : 'Create Startup'}</h1>
       <div className="card p-8 max-w-2xl">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium mb-1">Startup Name</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Startup Name</label>
             <input required className="input-field" value={form.startup_name} onChange={(e) => setForm({ ...form, startup_name: e.target.value })} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Logo</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Logo</label>
             <input type="file" accept="image/*" onChange={handleImageUpload} className="input-field" />
             {uploading && <p className="text-sm text-slate-500 mt-1">Uploading...</p>}
-            {form.logo && <img src={form.logo} alt="" className="w-20 h-20 mt-2 rounded-lg object-contain" />}
+            {form.logo && <img src={form.logo} alt="" className="w-20 h-20 mt-2 rounded-xl object-contain ring-1 ring-slate-200 dark:ring-slate-700" />}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Industry</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Industry</label>
             <select required className="input-field" value={form.industry} onChange={(e) => setForm({ ...form, industry: e.target.value })}>
               <option value="">Select Industry</option>
               {['Technology', 'Healthcare', 'Finance', 'Education', 'E-commerce', 'Other'].map((i) => (
@@ -106,11 +106,11 @@ const MyStartup = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Description</label>
             <textarea required rows={4} className="input-field" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Funding Stage</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Funding Stage</label>
             <select required className="input-field" value={form.funding_stage} onChange={(e) => setForm({ ...form, funding_stage: e.target.value })}>
               <option value="">Select Stage</option>
               {['Pre-seed', 'Seed', 'Series A', 'Series B', 'Bootstrapped'].map((s) => (
@@ -119,10 +119,10 @@ const MyStartup = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Team Size Needed</label>
+            <label className="block text-sm font-semibold mb-2 text-slate-700 dark:text-slate-300">Team Size Needed</label>
             <input type="number" min={1} className="input-field" value={form.team_size_needed} onChange={(e) => setForm({ ...form, team_size_needed: parseInt(e.target.value) })} />
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button type="submit" disabled={saving} className="btn-primary disabled:opacity-50">
               {saving ? 'Saving...' : startup ? 'Update Startup' : 'Create Startup'}
             </button>

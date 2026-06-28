@@ -91,7 +91,7 @@ const Navbar = () => {
     }`;
 
   return (
-    <nav className="relative overflow-visible bg-white/95 dark:bg-[#0a0f1a]/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 dark:border-white/5 transition-colors duration-300">
+    <nav className="premium-navbar relative overflow-visible sticky top-0 z-50 transition-colors duration-300">
       <div className="flex items-center justify-between h-20 w-full gap-8 px-8 sm:px-10 lg:px-12">
         <Link to="/" className="flex shrink-0 items-center">
           <Logo className="h-14 md:h-16 max-w-[220px] md:max-w-[280px]" />

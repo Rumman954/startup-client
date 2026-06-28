@@ -41,10 +41,11 @@ const Login = () => {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Welcome Back</h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-2">Sign in to your StartUp Labs account</p>
+          <p className="section-eyebrow">Account</p>
+          <h1 className="section-title text-3xl md:text-4xl">Welcome Back</h1>
+          <p className="section-subtitle mt-2">Sign in to your StartUp Labs account</p>
         </div>
-        <div className="card p-8">
+        <div className="premium-auth-card p-8 sm:p-10">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
@@ -66,7 +67,7 @@ const Login = () => {
             <FcGoogle size={20} /> Google
           </button>
           <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-6">
-            Don&apos;t have an account? <Link to="/register" className="text-indigo-600 font-semibold hover:underline">Register</Link>
+            Don&apos;t have an account? <Link to="/register" className="text-orange-500 font-semibold hover:underline">Register</Link>
           </p>
         </div>
       </div>

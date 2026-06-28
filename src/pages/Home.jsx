@@ -166,15 +166,12 @@ const Home = () => {
                 {slide.description}
               </p>
               <div className="flex flex-wrap gap-4 justify-start">
-                <Link
-                  to={slide.primaryCta.to}
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-6 rounded-full transition-colors shadow-lg text-sm md:text-base"
-                >
+                <Link to={slide.primaryCta.to} className="btn-primary text-sm md:text-base">
                   {slide.primaryCta.label}
                 </Link>
                 <Link
                   to={slide.secondaryCta.to}
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-6 rounded-full transition-colors shadow-lg text-sm md:text-base"
+                  className="inline-flex items-center justify-center font-semibold py-2.5 px-7 rounded-full text-sm md:text-base text-white border border-white/30 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-white/50 transition-all duration-300 hover:-translate-y-0.5"
                 >
                   {slide.secondaryCta.label}
                 </Link>
@@ -185,9 +182,10 @@ const Home = () => {
       </section>
 
       {/* Featured Startups */}
-      <section className="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+      <section className="premium-section premium-section-light py-20 sm:py-24 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-14">
+            <p className="section-eyebrow">Discover</p>
             <h2 className="section-title">Featured Startups</h2>
             <p className="section-subtitle">Discover innovative startups looking for team members</p>
           </div>
@@ -231,18 +229,17 @@ const Home = () => {
               ))}
             </div>
           )}
-          <div className="text-center mt-8">
-            <Link to="/startups" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-8 rounded-full transition-colors">
-              View All Startups
-            </Link>
+          <div className="text-center mt-10">
+            <Link to="/startups" className="btn-primary">View All Startups</Link>
           </div>
         </div>
       </section>
 
       {/* Featured Opportunities */}
-      <section className="py-16 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <section className="premium-section premium-section-muted py-20 sm:py-24 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-14">
+            <p className="section-eyebrow">Opportunities</p>
             <h2 className="section-title">Featured Opportunities</h2>
             <p className="section-subtitle">Latest roles open for talented collaborators</p>
           </div>
@@ -276,10 +273,11 @@ const Home = () => {
       </section>
 
       {/* Why Join */}
-      <section className="py-16 bg-white dark:bg-slate-900 transition-colors duration-300">
+      <section className="premium-section premium-section-light py-20 sm:py-24 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="section-title">Why Join StartUp Labs</h2>
+          <div className="text-center mb-14">
+            <p className="section-eyebrow">Community</p>
+            <h2 className="section-title">Why Join <span className="premium-gradient-text">StartUp Labs</span></h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -289,7 +287,7 @@ const Home = () => {
             ].map(({ icon: Icon, title, desc }) => (
               <div
                 key={title}
-                className="group text-center p-6 rounded-2xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/50 cursor-default transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 dark:hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5 hover:bg-orange-50/50 dark:hover:bg-slate-800"
+                className="group text-center p-8 rounded-3xl border border-slate-100/80 dark:border-slate-700/60 bg-white dark:bg-slate-800/50 cursor-default transition-all duration-300 hover:-translate-y-2 hover:border-orange-200 dark:hover:border-orange-500/40 hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
               >
                 <div className="w-14 h-14 bg-orange-100 dark:bg-orange-500/10 rounded-xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-orange-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/30">
                   <Icon className="text-orange-500 transition-colors duration-300 group-hover:text-white" size={24} />
@@ -308,25 +306,23 @@ const Home = () => {
 
       {/* Statistics - dark section */}
       {/* Statistics */}
-      <section className="py-16 bg-gradient-to-br from-orange-50 via-white to-slate-50 dark:from-[#0a0f1a] dark:via-slate-900 dark:to-[#0a0f1a] text-slate-900 dark:text-white transition-colors duration-300">
+      <section className="premium-section py-20 sm:py-24 bg-gradient-to-br from-orange-50/80 via-white to-sky-50/40 dark:from-[#0a0f1a] dark:via-slate-900 dark:to-[#0a0f1a] transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Startup Statistics</h2>
-            <p className="text-orange-500 dark:text-orange-400 mt-2">Our growing community at a glance</p>
+          <div className="text-center mb-14">
+            <p className="section-eyebrow">Impact</p>
+            <h2 className="section-title text-slate-900 dark:text-white">Startup Statistics</h2>
+            <p className="section-subtitle premium-gradient-text font-semibold">Our growing community at a glance</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8 text-center">
             {[
               { num: '500+', label: 'Active Startups' },
               { num: '1,200+', label: 'Opportunities Posted' },
               { num: '3,000+', label: 'Collaborators' },
               { num: '850+', label: 'Teams Formed' },
             ].map(({ num, label }) => (
-              <div
-                key={label}
-                className="p-6 rounded-xl border border-orange-100 bg-white shadow-sm hover:shadow-md hover:border-orange-200 dark:border-white/10 dark:bg-white/5 dark:shadow-none dark:hover:shadow-lg dark:hover:shadow-orange-500/5 transition-all"
-              >
-                <div className="text-4xl font-bold text-orange-500 dark:text-orange-400">{num}</div>
-                <div className="text-slate-600 dark:text-slate-400 mt-2 text-sm">{label}</div>
+              <div key={label} className="premium-stat-card">
+                <div className="text-3xl sm:text-4xl font-extrabold premium-gradient-text">{num}</div>
+                <div className="text-slate-600 dark:text-slate-400 mt-2 text-sm font-medium">{label}</div>
               </div>
             ))}
           </div>

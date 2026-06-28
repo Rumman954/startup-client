@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../lib/api';
 import LoadingSpinner from '../components/LoadingSpinner';
+import PageHeader from '../components/PageHeader';
 
 const BrowseOpportunities = () => {
   const [opportunities, setOpportunities] = useState([]);
@@ -38,11 +39,14 @@ const BrowseOpportunities = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="section-title mb-2">Browse Opportunities</h1>
-      <p className="section-subtitle mb-8">Find your next role in an exciting startup</p>
+    <div className="page-container">
+      <PageHeader
+        eyebrow="Opportunities"
+        title="Browse Opportunities"
+        subtitle="Find your next role in an exciting startup and join a team building something meaningful."
+      />
 
-      <div className="card p-6 mb-8">
+      <div className="card p-6 sm:p-8 mb-10">
         <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input type="text" placeholder="Search by role or skills..." className="input-field md:col-span-2" value={search} onChange={(e) => setSearch(e.target.value)} />
           <select className="input-field" value={workType} onChange={(e) => { setWorkType(e.target.value); setPage(1); }}>
@@ -64,34 +68,34 @@ const BrowseOpportunities = () => {
       </div>
 
       {loading ? <LoadingSpinner /> : opportunities.length === 0 ? (
-        <p className="text-center text-slate-500 py-20">No opportunities found.</p>
+        <div className="empty-state">No opportunities found. Try adjusting your filters.</div>
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {opportunities.map((opp) => (
-              <div key={opp._id} className="card h-full flex flex-col p-6">
-                <h3 className="font-bold text-lg">{opp.role_title}</h3>
-                <p className="text-sm text-indigo-600 font-medium mt-1">{opp.startup_id?.startup_name}</p>
-                <div className="flex flex-wrap gap-1 mt-3">
+              <div key={opp._id} className="card h-full flex flex-col p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white">{opp.role_title}</h3>
+                <p className="text-sm text-orange-500 font-semibold mt-1">{opp.startup_id?.startup_name}</p>
+                <div className="flex flex-wrap gap-1.5 mt-3">
                   {(opp.required_skills || []).map((s) => (
-                    <span key={s} className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs rounded">{s}</span>
+                    <span key={s} className="skill-chip">{s}</span>
                   ))}
                 </div>
-                <div className="mt-3 text-sm text-slate-500 space-y-1">
+                <div className="mt-3 text-sm text-slate-500 dark:text-slate-400 space-y-1">
                   <p className="capitalize">Work: {opp.work_type}</p>
                   <p className="capitalize">Commitment: {opp.commitment_level}</p>
                   <p>Deadline: {new Date(opp.deadline).toLocaleDateString()}</p>
                 </div>
-                <Link to={`/opportunities/${opp._id}`} className="mt-auto pt-4 text-indigo-600 font-semibold text-sm hover:underline">View Details →</Link>
+                <Link to={`/opportunities/${opp._id}`} className="mt-auto pt-4 link-accent">View Details →</Link>
               </div>
             ))}
           </div>
 
           {pagination.totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-10">
-              <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="px-4 py-2 rounded-lg border disabled:opacity-50">Previous</button>
-              <span className="px-4 py-2 text-sm text-slate-600">Page {page} of {pagination.totalPages}</span>
-              <button disabled={page >= pagination.totalPages} onClick={() => setPage(page + 1)} className="px-4 py-2 rounded-lg border disabled:opacity-50">Next</button>
+            <div className="flex justify-center items-center gap-3 mt-12">
+              <button disabled={page <= 1} onClick={() => setPage(page - 1)} className="pagination-btn">Previous</button>
+              <span className="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400">Page {page} of {pagination.totalPages}</span>
+              <button disabled={page >= pagination.totalPages} onClick={() => setPage(page + 1)} className="pagination-btn">Next</button>
             </div>
           )}
         </>

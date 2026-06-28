@@ -30,35 +30,35 @@ const ManageUsers = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">Manage Users</h1>
-      <div className="overflow-x-auto card">
-        <table className="w-full">
-          <thead className="bg-slate-50 border-b">
+      <h1 className="dashboard-title mb-8">Manage Users</h1>
+      <div className="premium-table-wrap">
+        <table className="premium-table">
+          <thead>
             <tr>
-              <th className="text-left p-4 text-sm font-semibold">Name</th>
-              <th className="text-left p-4 text-sm font-semibold">Email</th>
-              <th className="text-left p-4 text-sm font-semibold">Role</th>
-              <th className="text-left p-4 text-sm font-semibold">Status</th>
-              <th className="text-left p-4 text-sm font-semibold">Actions</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user._id} className="border-b last:border-0">
-                <td className="p-4 text-sm font-medium">{user.name}</td>
-                <td className="p-4 text-sm text-slate-600">{user.email}</td>
-                <td className="p-4 text-sm capitalize">{user.role}</td>
-                <td className="p-4">
-                  <span className={`px-2 py-1 rounded-full text-xs ${user.isBlocked ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+              <tr key={user._id}>
+                <td className="font-semibold text-slate-900 dark:text-white">{user.name}</td>
+                <td className="text-slate-600 dark:text-slate-400">{user.email}</td>
+                <td className="capitalize text-slate-700 dark:text-slate-300">{user.role}</td>
+                <td>
+                  <span className={user.isBlocked ? 'status-rejected' : 'status-accepted'}>
                     {user.isBlocked ? 'Blocked' : 'Active'}
                   </span>
                 </td>
-                <td className="p-4">
+                <td>
                   {user.role !== 'admin' && (
                     user.isBlocked ? (
-                      <button onClick={() => toggleBlock(user._id, false)} className="text-green-600 text-sm font-medium">Unblock</button>
+                      <button onClick={() => toggleBlock(user._id, false)} className="text-emerald-600 dark:text-emerald-400 text-sm font-semibold hover:underline">Unblock</button>
                     ) : (
-                      <button onClick={() => toggleBlock(user._id, true)} className="text-red-600 text-sm font-medium">Block</button>
+                      <button onClick={() => toggleBlock(user._id, true)} className="text-red-500 text-sm font-semibold hover:underline">Block</button>
                     )
                   )}
                 </td>

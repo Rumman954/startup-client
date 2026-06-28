@@ -46,16 +46,16 @@ const ManageOpportunities = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Manage Opportunities</h1>
-        <Link to="/founder/add-opportunity" className="btn-primary text-sm">Add New</Link>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+        <h1 className="dashboard-title">Manage Opportunities</h1>
+        <Link to="/founder/add-opportunity" className="btn-primary text-sm w-fit">Add New</Link>
       </div>
       {opportunities.length === 0 ? (
-        <p className="text-slate-500">No opportunities yet.</p>
+        <div className="empty-state">No opportunities yet. Post your first role to attract collaborators.</div>
       ) : (
         <div className="space-y-4">
           {opportunities.map((opp) => (
-            <div key={opp._id} className="card p-6">
+            <div key={opp._id} className="card p-6 transition-all hover:shadow-lg">
               {editing === opp._id ? (
                 <form onSubmit={handleUpdate} className="space-y-3">
                   <input className="input-field" value={form.role_title} onChange={(e) => setForm({ ...form, role_title: e.target.value })} />
@@ -66,15 +66,15 @@ const ManageOpportunities = () => {
                   </div>
                 </form>
               ) : (
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start gap-4">
                   <div>
-                    <h3 className="font-bold text-lg">{opp.role_title}</h3>
-                    <p className="text-sm text-slate-500 capitalize">{opp.work_type} · {opp.commitment_level}</p>
-                    <p className="text-sm text-slate-500">Deadline: {new Date(opp.deadline).toLocaleDateString()}</p>
+                    <h3 className="font-bold text-lg text-slate-900 dark:text-white">{opp.role_title}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 capitalize">{opp.work_type} · {opp.commitment_level}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Deadline: {new Date(opp.deadline).toLocaleDateString()}</p>
                   </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => { setEditing(opp._id); setForm({ ...opp, required_skills: opp.required_skills }); }} className="text-indigo-600 text-sm font-medium">Edit</button>
-                    <button onClick={() => handleDelete(opp._id)} className="text-red-600 text-sm font-medium">Delete</button>
+                  <div className="flex gap-3 shrink-0">
+                    <button onClick={() => { setEditing(opp._id); setForm({ ...opp, required_skills: opp.required_skills }); }} className="link-accent">Edit</button>
+                    <button onClick={() => handleDelete(opp._id)} className="text-red-500 text-sm font-semibold hover:underline">Delete</button>
                   </div>
                 </div>
               )}

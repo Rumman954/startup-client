@@ -3,6 +3,12 @@ import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+const statusClass = (status) => {
+  if (status === 'approved') return 'status-accepted';
+  if (status === 'removed') return 'status-rejected';
+  return 'status-pending';
+};
+
 const ManageStartups = () => {
   const [startups, setStartups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,19 +36,16 @@ const ManageStartups = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">Manage Startups</h1>
+      <h1 className="dashboard-title mb-8">Manage Startups</h1>
       <div className="space-y-4">
         {startups.map((startup) => (
-          <div key={startup._id} className="card p-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <div key={startup._id} className="card p-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4 transition-all hover:shadow-lg">
             <div className="flex items-center gap-4">
-              <img src={startup.logo || `https://ui-avatars.com/api/?name=${startup.startup_name}`} alt="" className="w-14 h-14 rounded-lg object-contain bg-slate-100" />
+              <img src={startup.logo || `https://ui-avatars.com/api/?name=${startup.startup_name}`} alt="" className="w-14 h-14 rounded-xl object-contain bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700" />
               <div>
-                <h3 className="font-bold">{startup.startup_name}</h3>
-                <p className="text-sm text-slate-500">{startup.industry} · {startup.founder_email}</p>
-                <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-xs capitalize ${
-                  startup.status === 'approved' ? 'bg-green-100 text-green-700' :
-                  startup.status === 'removed' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                }`}>{startup.status}</span>
+                <h3 className="font-bold text-slate-900 dark:text-white">{startup.startup_name}</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">{startup.industry} · {startup.founder_email}</p>
+                <span className={`inline-block mt-2 ${statusClass(startup.status)}`}>{startup.status}</span>
               </div>
             </div>
             <div className="flex gap-2">

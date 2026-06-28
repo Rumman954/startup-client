@@ -3,6 +3,12 @@ import api from '../../lib/api';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
+const statusClass = (status) => {
+  if (status === 'accepted') return 'status-accepted';
+  if (status === 'rejected') return 'status-rejected';
+  return 'status-pending';
+};
+
 const FounderApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,28 +36,25 @@ const FounderApplications = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-8">Applications</h1>
+      <h1 className="dashboard-title mb-8">Applications</h1>
       {applications.length === 0 ? (
-        <p className="text-slate-500">No applications yet.</p>
+        <div className="empty-state">No applications yet.</div>
       ) : (
         <div className="space-y-4">
           {applications.map((app) => (
-            <div key={app._id} className="card p-6">
+            <div key={app._id} className="card p-6 transition-all hover:shadow-lg">
               <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
                 <div>
-                  <h3 className="font-bold">{app.opportunity_id?.role_title}</h3>
-                  <p className="text-sm text-slate-500">{app.applicant_email}</p>
+                  <h3 className="font-bold text-slate-900 dark:text-white">{app.opportunity_id?.role_title}</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{app.applicant_email}</p>
                   {app.portfolio_link && (
-                    <a href={app.portfolio_link} target="_blank" rel="noreferrer" className="text-sm text-indigo-600 hover:underline">{app.portfolio_link}</a>
+                    <a href={app.portfolio_link} target="_blank" rel="noreferrer" className="text-sm link-accent block mt-1">{app.portfolio_link}</a>
                   )}
-                  <p className="text-sm text-slate-600 mt-2">{app.motivation}</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">{app.motivation}</p>
                   <p className="text-xs text-slate-400 mt-2">Applied: {new Date(app.applied_at).toLocaleDateString()}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${
-                    app.status === 'accepted' ? 'bg-green-100 text-green-700' :
-                    app.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
-                  }`}>{app.status}</span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={statusClass(app.status)}>{app.status}</span>
                   {app.status === 'pending' && (
                     <>
                       <button onClick={() => updateStatus(app._id, 'accepted')} className="btn-primary text-xs py-1.5 px-3">Accept</button>

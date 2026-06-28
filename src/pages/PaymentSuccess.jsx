@@ -22,15 +22,17 @@ const PaymentSuccess = () => {
   if (loading) return <LoadingSpinner fullScreen message="Verifying payment..." />;
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="card p-12 text-center max-w-md">
-        <FiCheckCircle className="text-green-500 mx-auto mb-6" size={64} />
-        <h1 className="text-2xl font-bold mb-2">Payment Successful!</h1>
-        <p className="text-slate-600 mb-4">Your premium founder package is now active.</p>
+    <div className="min-h-[70vh] flex items-center justify-center px-4 page-shell">
+      <div className="card p-10 sm:p-12 text-center max-w-md w-full">
+        <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center ring-1 ring-emerald-100 dark:ring-emerald-500/20">
+          <FiCheckCircle className="text-emerald-500" size={48} />
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Payment Successful!</h1>
+        <p className="text-slate-600 dark:text-slate-400 mb-6">Your premium founder package is now active.</p>
         {payment && (
-          <div className="bg-slate-50 rounded-lg p-4 text-sm text-left mb-6">
-            <p><span className="text-slate-500">Amount:</span> ${payment.amount}</p>
-            <p><span className="text-slate-500">Transaction ID:</span> {payment.transaction_id?.slice(0, 20)}...</p>
+          <div className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-5 text-sm text-left mb-8 space-y-2">
+            <p><span className="text-slate-500 dark:text-slate-400">Amount:</span> <span className="font-semibold text-slate-800 dark:text-slate-200">${payment.amount}</span></p>
+            <p><span className="text-slate-500 dark:text-slate-400">Transaction ID:</span> <span className="font-mono text-xs text-slate-700 dark:text-slate-300">{payment.transaction_id?.slice(0, 20)}...</span></p>
           </div>
         )}
         <Link to="/founder/dashboard" className="btn-primary">Go to Dashboard</Link>
