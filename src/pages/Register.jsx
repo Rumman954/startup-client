@@ -1,17 +1,25 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUp, signIn } from '../lib/auth';
 import { useAuth } from '../context/AuthContext';
-import { uploadImageFile } from '../lib/uploadImage';
+import { fileToBase64 } from '../lib/uploadImage';
+import { checkApiHealth, formatAuthError } from '../lib/authErrors';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
-import { FiUser, FiMail, FiImage, FiLock, FiEye, FiEyeOff, FiCheck } from 'react-icons/fi';
+import { FiUser, FiMail, FiImage, FiLock, FiEye, FiEyeOff, FiCheck, FiCheckCircle } from 'react-icons/fi';
+
+const PASSWORD_RULES = [
+  { id: 'length', label: '6+ chars', test: (p) => p.length >= 6 },
+  { id: 'upper', label: 'Uppercase', test: (p) => /[A-Z]/.test(p) },
+  { id: 'lower', label: 'Lowercase', test: (p) => /[a-z]/.test(p) },
+];
 
 const validatePassword = (password) => {
-  if (password.length < 6) return 'Password must be at least 6 characters';
-  if (!/[A-Z]/.test(password)) return 'Password must contain an uppercase letter';
-  if (!/[a-z]/.test(password)) return 'Password must contain a lowercase letter';
-  return null;
+  const failed = PASSWORD_RULES.find(({ test }) => !test(password));
+  if (!failed) return null;
+  if (failed.id === 'length') return 'Password must be at least 6 characters';
+  if (failed.id === 'upper') return 'Password must contain an uppercase letter';
+  return 'Password must contain a lowercase letter';
 };
 
 const IconField = ({ icon: Icon, className = '', ...props }) => (
@@ -28,10 +36,12 @@ const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', image: '', role: 'collaborator' });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [imageError, setImageError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [createdAccount, setCreatedAccount] = useState(null);
   const fileInputRef = useRef(null);
   const { issueJwt, syncUser } = useAuth();
   const navigate = useNavigate();
@@ -40,18 +50,50 @@ const Register = () => {
     const file = e.target.files[0];
     if (!file) return;
     setImageFile(file);
+    setImageError('');
     setForm((f) => ({ ...f, image: URL.createObjectURL(file) }));
   };
 
+  const handleGoDashboard = () => {
+    setSuccessOpen(false);
+    navigate('/dashboard');
+  };
+
+  useEffect(() => {
+    if (!successOpen) return undefined;
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') handleGoDashboard();
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [successOpen, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!imageFile) {
+      setImageError('Profile image is required. Please upload a photo before creating your account.');
+      toast.error('Profile image is required');
+      return;
+    }
+
     const pwdError = validatePassword(form.password);
     if (pwdError) return toast.error(pwdError);
     if (form.password !== confirmPassword) return toast.error('Passwords do not match');
-    if (!imageFile) return toast.error('Profile image is required');
+
+    setImageError('');
 
     setLoading(true);
     try {
+      const imageBase64 = await fileToBase64(imageFile);
+
       const result = await signUp.email({
         email: form.email,
         password: form.password,
@@ -59,37 +101,46 @@ const Register = () => {
       });
       if (result.error) throw new Error(result.error.message);
 
-      await syncUser({ name: form.name, email: form.email, role: form.role });
+      await syncUser({
+        name: form.name,
+        email: form.email,
+        role: form.role,
+        imageBase64,
+      });
       await issueJwt();
 
-      setUploading(true);
-      const imageUrl = await uploadImageFile(imageFile);
-      await syncUser({ name: form.name, email: form.email, image: imageUrl, role: form.role });
-      await issueJwt();
-
-      toast.success('Account created successfully!');
-      navigate('/dashboard');
+      setCreatedAccount({
+        name: form.name,
+        email: form.email,
+        role: form.role,
+        image: form.image,
+      });
+      setSuccessOpen(true);
     } catch (err) {
-      toast.error(err.message || 'Registration failed');
+      toast.error(formatAuthError(err, 'Registration failed'));
     } finally {
       setLoading(false);
-      setUploading(false);
     }
   };
 
   const handleGoogle = async () => {
     try {
+      const online = await checkApiHealth();
+      if (!online) {
+        toast.error('Backend server is offline. Run: cd server && npm run dev (and configure server/.env first).');
+        return;
+      }
       sessionStorage.setItem('pendingRole', form.role);
       await signIn.social({
         provider: 'google',
         callbackURL: `${window.location.origin}/dashboard`,
       });
     } catch (err) {
-      toast.error(err.message || 'Google registration failed');
+      toast.error(formatAuthError(err, 'Google registration failed. Check GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in server/.env.'));
     }
   };
 
-  const isBusy = loading || uploading;
+  const isBusy = loading;
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-slate-50/80 dark:bg-transparent">
@@ -174,7 +225,6 @@ const Register = () => {
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                required
                 className="hidden"
                 onChange={handleImageChange}
               />
@@ -182,17 +232,21 @@ const Register = () => {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className={`w-full flex items-center gap-3 pl-4 pr-4 py-3 rounded-xl border font-medium transition-colors ${
-                  imageFile
+                  imageError
+                    ? 'border-red-400 dark:border-red-500/50 bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-300'
+                    : imageFile
                     ? 'border-orange-200 dark:border-orange-500/30 bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-500/20'
                     : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-orange-300 dark:hover:border-orange-500/40'
                 }`}
               >
-                <FiImage size={18} className="text-orange-400 shrink-0" />
+                <FiImage size={18} className={imageError ? 'text-red-400 shrink-0' : 'text-orange-400 shrink-0'} />
                 <span className="truncate">{imageFile ? imageFile.name : 'Upload Profile Image *'}</span>
               </button>
-              {!imageFile && (
+              {imageError ? (
+                <p className="text-xs text-red-500 dark:text-red-400 mt-1.5 font-semibold">{imageError}</p>
+              ) : !imageFile ? (
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">A profile photo is required to create your account.</p>
-              )}
+              ) : null}
               {form.image && (
                 <img
                   src={form.image}
@@ -223,7 +277,22 @@ const Register = () => {
                   {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                 </button>
               </div>
-              <p className="text-xs text-slate-400 mt-1.5">Min 6 chars, 1 uppercase, 1 lowercase</p>
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-2">
+                {PASSWORD_RULES.map(({ id, label, test }) => {
+                  const met = test(form.password);
+                  return (
+                    <span
+                      key={id}
+                      className={`text-xs font-semibold inline-flex items-center gap-1 transition-colors duration-200 ${
+                        met ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'
+                      }`}
+                    >
+                      {met && <FiCheck size={14} strokeWidth={3} aria-hidden />}
+                      {label}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
 
             <div>
@@ -254,7 +323,7 @@ const Register = () => {
               disabled={isBusy}
               className="w-full bg-orange-700 hover:bg-orange-800 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-colors shadow-md shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {uploading ? 'Uploading image...' : loading ? 'Creating account...' : 'Create Account 🚀'}
+              {loading ? 'Creating account...' : 'Create Account 🚀'}
             </button>
           </form>
 
@@ -266,6 +335,50 @@ const Register = () => {
           </p>
         </div>
       </div>
+
+      {successOpen && createdAccount && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={handleGoDashboard}
+            aria-label="Close"
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="register-success-title"
+            className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl p-8 sm:p-10 text-center"
+          >
+            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center ring-1 ring-emerald-100 dark:ring-emerald-500/20">
+              <FiCheckCircle className="text-emerald-500" size={36} />
+            </div>
+            <h2 id="register-success-title" className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
+              Account Created!
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              Welcome to <span className="font-semibold text-orange-500">StartUp Labs</span>,{' '}
+              <span className="font-semibold text-slate-800 dark:text-slate-200">{createdAccount.name}</span>.
+              Your <span className="capitalize font-medium">{createdAccount.role}</span> account is ready.
+            </p>
+            {createdAccount.image && (
+              <img
+                src={createdAccount.image}
+                alt={createdAccount.name}
+                className="w-20 h-20 rounded-full object-cover mx-auto mb-6 ring-4 ring-orange-500/20"
+              />
+            )}
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">{createdAccount.email}</p>
+            <button
+              type="button"
+              onClick={handleGoDashboard}
+              className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3.5 px-6 rounded-xl transition-colors shadow-md shadow-orange-500/20"
+            >
+              Go to Dashboard →
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

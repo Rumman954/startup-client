@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signIn } from '../lib/auth';
 import { useAuth } from '../context/AuthContext';
+import { checkApiHealth, formatAuthError } from '../lib/authErrors';
 import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -23,7 +24,7 @@ const Login = () => {
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (err) {
-      toast.error(err.message || 'Login failed');
+      toast.error(formatAuthError(err, 'Login failed'));
     } finally {
       setLoading(false);
     }
@@ -31,9 +32,14 @@ const Login = () => {
 
   const handleGoogle = async () => {
     try {
+      const online = await checkApiHealth();
+      if (!online) {
+        toast.error('Backend server is offline. Run: cd server && npm run dev (and configure server/.env first).');
+        return;
+      }
       await signIn.social({ provider: 'google', callbackURL: `${window.location.origin}/` });
     } catch (err) {
-      toast.error(err.message || 'Google login failed');
+      toast.error(formatAuthError(err, 'Google login failed. Check GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in server/.env.'));
     }
   };
 

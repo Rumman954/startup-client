@@ -370,3 +370,103 @@ html.dark .dashboard-action-card {
 .empty-state {
   @apply text-center py-16 text-slate-500 dark:text-slate-400 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30;
 }
+
+.founder-dashboard-shell {
+  background: #f4f6fb;
+}
+
+html.dark .founder-dashboard-shell {
+  background: #0a0f1a;
+}
+
+.founder-sidebar {
+  @apply w-64 bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800/80 hidden lg:flex lg:flex-col fixed h-full z-40 shadow-[4px_0_24px_rgba(0,0,0,0.04)];
+}
+
+.founder-dashboard-main {
+  @apply max-w-6xl;
+}
+
+.founder-stat-card {
+  @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm;
+}
+
+.founder-chart-card {
+  @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 sm:p-8 shadow-sm;
+}
+
+.founder-premium-banner {
+  @apply rounded-2xl border border-orange-200 dark:border-orange-500/30 bg-orange-50/90 dark:bg-orange-500/10 px-6 py-5 shadow-sm;
+}
+
+.founder-startup-card {
+  @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 sm:p-8 shadow-sm;
+}
+
+.founder-job-card {
+  @apply bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 sm:p-6 shadow-sm transition-all hover:shadow-md;
+}
+
+.founder-badge-violet {
+  @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300;
+}
+
+.founder-badge-muted {
+  @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300;
+}
+
+.founder-badge-green {
+  @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold capitalize bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300;
+}
+
+.founder-badge-amber {
+  @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold capitalize bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300;
+}
+
+.founder-badge-red {
+  @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold capitalize bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-300;
+}
+
+.founder-form-wrap {
+  @apply flex justify-center;
+}
+
+.founder-form-card {
+  @apply w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-6 sm:p-8 shadow-sm;
+}
+
+.founder-form-title {
+  @apply flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-8;
+}
+
+.founder-form-label {
+  @apply block text-sm font-bold text-slate-800 dark:text-slate-200 mb-2;
+}
+
+.founder-form-input {
+  @apply w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all focus:ring-2 focus:ring-violet-500/30 focus:border-violet-400 dark:focus:border-violet-500;
+}
+
+.founder-form-textarea {
+  @apply resize-y min-h-[140px];
+}
+
+.founder-form-select {
+  @apply appearance-none cursor-pointer;
+}
+
+.founder-logo-preview {
+  @apply w-16 h-16 shrink-0 rounded-xl border border-violet-200 dark:border-violet-500/30 bg-violet-50 dark:bg-violet-500/10 flex items-center justify-center overflow-hidden;
+}
+
+.founder-upload-btn {
+  @apply px-5 py-3 rounded-xl border border-violet-200 dark:border-violet-500/30 bg-violet-50 dark:bg-violet-500/10 text-violet-700 dark:text-violet-300 font-semibold text-sm hover:bg-violet-100 dark:hover:bg-violet-500/20 transition-colors disabled:opacity-50;
+}
+
+.founder-submit-btn {
+  @apply w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-md shadow-violet-500/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.founder-cancel-btn {
+  @apply w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors;
+}

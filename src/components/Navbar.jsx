@@ -90,6 +90,26 @@ const Navbar = () => {
         : 'text-slate-800 dark:text-slate-100 hover:text-orange-500 dark:hover:text-orange-400 hover:bg-slate-100 dark:hover:bg-white/10'
     }`;
 
+  const userAvatar = user?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=f97316&color=fff`;
+
+  const UserChip = ({ className = '', onNavigate }) => (
+    <Link
+      to="/profile"
+      onClick={onNavigate}
+      className={`flex items-center gap-2.5 rounded-full pl-1 pr-3 py-1 hover:bg-slate-100 dark:hover:bg-white/10 transition-all group ${className}`}
+      title="View profile"
+    >
+      <img
+        src={userAvatar}
+        alt={user?.name}
+        className="w-9 h-9 rounded-full object-cover ring-2 ring-orange-500/25 group-hover:ring-orange-500/50 transition-all"
+      />
+      <span className="text-sm font-semibold text-slate-800 dark:text-slate-100 max-w-[140px] truncate">
+        {user?.name}
+      </span>
+    </Link>
+  );
+
   return (
     <nav className="premium-navbar relative overflow-visible sticky top-0 z-50 transition-colors duration-300">
       <div className="flex items-center justify-between h-20 w-full gap-8 px-8 sm:px-10 lg:px-12">
@@ -173,7 +193,7 @@ const Navbar = () => {
               {user ? (
                 <>
                   <NavLink to="/dashboard" className={navLinkClass}>Dashboard</NavLink>
-                  <NavLink to="/profile" className={navLinkClass}>Profile</NavLink>
+                  <UserChip />
                   <button onClick={handleLogout} className={`${navItemBase} flex items-center gap-1.5 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-700 dark:hover:text-red-300`}>
                     <FiLogOut size={17} /> Logout
                   </button>
@@ -325,8 +345,10 @@ const Navbar = () => {
           <NavLink to="/startups" className={navLinkClass} onClick={() => setOpen(false)}>Startups</NavLink>
           {user ? (
             <>
+              <div className="px-3 py-3 mb-2 border-b border-slate-100 dark:border-white/10">
+                <UserChip onNavigate={() => setOpen(false)} className="w-fit" />
+              </div>
               <NavLink to="/dashboard" className={navLinkClass} onClick={() => setOpen(false)}>Dashboard</NavLink>
-              <NavLink to="/profile" className={navLinkClass} onClick={() => setOpen(false)}>Profile</NavLink>
               <button onClick={handleLogout} className="w-full text-left px-3 py-2 text-red-500 dark:text-red-400 font-medium">Logout</button>
             </>
           ) : (
