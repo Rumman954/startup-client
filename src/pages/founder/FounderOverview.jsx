@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiBriefcase, FiUsers, FiCheckCircle } from 'react-icons/fi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import toast from 'react-hot-toast';
 import api from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -35,9 +34,9 @@ const CHART_COLORS = ['#8b5cf6', '#8b5cf6', '#c4b5fd'];
 
 const FounderOverview = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [upgrading, setUpgrading] = useState(false);
 
   useEffect(() => {
     api.get('/api/users/founder/stats')
@@ -46,17 +45,7 @@ const FounderOverview = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleGoPremium = async () => {
-    setUpgrading(true);
-    try {
-      const { data } = await api.post('/api/payments/create-checkout');
-      window.location.href = data.url;
-    } catch (err) {
-      toast.error(err.message || 'Could not start checkout');
-    } finally {
-      setUpgrading(false);
-    }
-  };
+  const handleGoPremium = () => navigate('/premium');
 
   if (loading) return <LoadingSpinner />;
 
@@ -92,10 +81,9 @@ const FounderOverview = () => {
           <button
             type="button"
             onClick={handleGoPremium}
-            disabled={upgrading}
-            className="shrink-0 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-md shadow-orange-500/20 transition-colors disabled:opacity-50"
+            className="shrink-0 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-md shadow-orange-500/20 transition-colors"
           >
-            {upgrading ? 'Redirecting...' : 'Go Premium — $29.99'}
+            Go Premium
           </button>
         </div>
       )}

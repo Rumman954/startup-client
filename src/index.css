@@ -282,6 +282,54 @@ html.dark .premium-stat-card {
   @apply px-2.5 py-1 bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300 text-xs font-medium rounded-lg;
 }
 
+.opp-skill-chip {
+  @apply px-2.5 py-1 bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 text-xs font-medium rounded-full;
+}
+
+.browse-opp-layout {
+  @apply flex flex-col lg:flex-row gap-8 lg:gap-10;
+}
+
+.browse-opp-sidebar {
+  @apply w-full lg:w-64 shrink-0 space-y-8;
+}
+
+.browse-opp-filter-title {
+  @apply text-sm font-bold text-slate-900 dark:text-white mb-3;
+}
+
+.browse-opp-search {
+  @apply w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-sm outline-none focus:ring-2 focus:ring-violet-500/30 focus:border-violet-400;
+}
+
+.browse-opp-check {
+  @apply flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300 cursor-pointer select-none;
+}
+
+.browse-opp-check input {
+  @apply w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500/30;
+}
+
+.browse-opp-card {
+  @apply relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-5 flex flex-col h-full shadow-sm transition-all duration-300 hover:shadow-lg hover:border-violet-200 dark:hover:border-violet-500/30 hover:-translate-y-0.5;
+}
+
+.opp-badge-days {
+  @apply absolute top-4 right-4 px-2.5 py-1 rounded-lg text-xs font-bold bg-orange-100 text-orange-600 dark:bg-orange-500/15 dark:text-orange-400;
+}
+
+.opp-badge-expired {
+  @apply absolute top-4 right-4 px-2.5 py-1 rounded-lg text-xs font-bold bg-red-100 text-red-600 dark:bg-red-500/15 dark:text-red-400;
+}
+
+.opp-apply-btn {
+  @apply mt-4 w-full inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold transition-colors shadow-md shadow-violet-500/20;
+}
+
+.browse-opp-title-gradient {
+  @apply bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent;
+}
+
 .link-accent {
   @apply text-orange-500 font-semibold text-sm hover:underline transition-colors;
 }
@@ -373,6 +421,10 @@ html.dark .dashboard-action-card {
 
 .founder-dashboard-shell {
   background: #f4f6fb;
+}
+
+html.dark {
+  --pie-stroke: #0f172a;
 }
 
 html.dark .founder-dashboard-shell {
@@ -469,4 +521,566 @@ html.dark .founder-dashboard-shell {
 
 .founder-cancel-btn {
   @apply w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors;
+}
+
+.founder-form-input-readonly {
+  @apply bg-slate-50 text-slate-500 cursor-not-allowed border-slate-200;
+}
+
+.founder-form-fields-locked {
+  @apply relative pointer-events-none select-none;
+  filter: blur(0.4px);
+}
+
+.founder-form-fields-locked .founder-form-input,
+.founder-form-fields-locked .founder-form-select {
+  @apply bg-slate-50 border-slate-200 text-slate-400;
+  opacity: 0.5;
+}
+
+.founder-form-fields-locked .founder-form-label {
+  @apply opacity-70;
+}
+
+.founder-submit-btn-locked {
+  @apply bg-violet-300 hover:bg-violet-300 text-white/90 shadow-none cursor-not-allowed opacity-90;
+}
+
+.founder-premium-active-banner {
+  @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl
+    border border-violet-200 bg-violet-50/80 px-5 sm:px-6 py-4
+    dark:border-violet-500/40 dark:bg-violet-500/10;
+}
+
+.founder-premium-inline-banner {
+  @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl
+    border border-orange-200 bg-orange-50 px-5 sm:px-6 py-4
+    dark:border-orange-500/40 dark:bg-orange-500/10;
+}
+
+.premium-toast {
+  @apply flex items-center gap-3 rounded-full px-4 py-2.5 shadow-lg border border-slate-700/40 bg-slate-900 text-white;
+  min-width: auto;
+  max-width: 420px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.35);
+}
+
+.premium-toast-icon-wrap {
+  @apply w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center shrink-0;
+}
+
+.premium-toast-visible {
+  animation: premium-toast-in 0.35s ease-out forwards;
+}
+
+.premium-toast-hidden {
+  animation: premium-toast-out 0.25s ease-in forwards;
+}
+
+@keyframes premium-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes premium-toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+/* Premium plan landing */
+.premium-plan-page {
+  @apply min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-16 bg-white dark:bg-slate-950;
+}
+
+.premium-plan-inner {
+  @apply w-full max-w-xl text-center;
+}
+
+.premium-plan-badge {
+  @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold
+    bg-orange-50 text-orange-600 border border-orange-200
+    dark:bg-orange-500/10 dark:text-orange-300 dark:border-orange-500/30 mb-6;
+}
+
+.premium-plan-title {
+  @apply text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight;
+}
+
+.premium-plan-title-accent {
+  @apply text-violet-600 dark:text-violet-400;
+}
+
+.premium-plan-subtitle {
+  @apply text-slate-500 dark:text-slate-400 mt-3 mb-10 text-base sm:text-lg;
+}
+
+.premium-plan-card {
+  @apply bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-700/80
+    shadow-xl shadow-slate-200/50 dark:shadow-none p-8 sm:p-10 text-left;
+}
+
+.premium-plan-price {
+  @apply flex items-start justify-center gap-0.5 text-slate-900 dark:text-white leading-none mb-2;
+}
+
+.premium-plan-price-main {
+  @apply text-5xl sm:text-6xl font-extrabold;
+}
+
+.premium-plan-price-cents {
+  @apply text-2xl font-bold mt-2;
+}
+
+.premium-plan-terms {
+  @apply text-center text-sm text-slate-400 mb-8;
+}
+
+.premium-plan-inner-wide {
+  @apply max-w-6xl;
+}
+
+.premium-billing-toggle {
+  @apply inline-flex items-center gap-1 p-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 mb-10;
+}
+
+.premium-billing-btn {
+  @apply relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 transition-all;
+}
+
+.premium-billing-btn.active {
+  @apply bg-white dark:bg-slate-900 text-violet-600 dark:text-violet-400 shadow-sm;
+}
+
+.premium-billing-save {
+  @apply text-[10px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400;
+}
+
+.premium-plans-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 text-left;
+}
+
+.premium-plan-card-tier {
+  @apply relative flex flex-col;
+}
+
+.premium-plan-card-popular {
+  @apply ring-2 ring-violet-500/50 dark:ring-violet-400/40;
+}
+
+.premium-plan-card-current {
+  @apply ring-2 ring-orange-400/60;
+}
+
+.premium-plan-popular-badge {
+  @apply absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold
+    bg-violet-600 text-white shadow-md;
+}
+
+.premium-plan-tier-header h2 {
+  @apply text-xl font-extrabold text-slate-900 dark:text-white;
+}
+
+.premium-plan-tier-header p {
+  @apply text-sm text-slate-500 dark:text-slate-400 mt-1 mb-4;
+}
+
+.premium-plan-savings {
+  @apply text-emerald-600 dark:text-emerald-400 font-semibold;
+}
+
+.premium-plan-cta-current {
+  @apply from-slate-400 to-slate-500 hover:from-slate-400 hover:to-slate-500 cursor-default;
+}
+
+.premium-plan-features {
+  @apply space-y-4 mb-8 flex-1;
+}
+
+.premium-plan-card-tier .premium-plan-price {
+  @apply justify-start;
+}
+
+.premium-plan-card-tier .premium-plan-terms {
+  @apply text-left;
+}
+
+.premium-plan-card-tier .premium-plan-cta {
+  @apply mt-auto;
+}
+
+.premium-plan-features li {
+  @apply flex items-center gap-3 text-slate-700 dark:text-slate-200 text-sm sm:text-base;
+}
+
+.premium-plan-check {
+  @apply w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400
+    flex items-center justify-center shrink-0;
+}
+
+.premium-plan-cta {
+  @apply w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl
+    bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600
+    text-white font-bold text-base shadow-lg shadow-orange-500/25 transition-all
+    disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+/* Stripe-style checkout (demo) */
+.stripe-checkout-page {
+  @apply min-h-screen bg-[#f6f9fc] py-8 px-4;
+}
+
+.stripe-checkout-shell {
+  @apply max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-2xl shadow-slate-300/40;
+}
+
+.stripe-checkout-summary {
+  @apply bg-white p-8 sm:p-10 border-r border-slate-100;
+}
+
+.stripe-checkout-brand {
+  @apply flex items-center gap-3 text-slate-800 font-semibold mb-8;
+}
+
+.stripe-sandbox-badge {
+  @apply text-xs font-bold uppercase tracking-wide px-2 py-1 rounded bg-slate-900 text-white;
+}
+
+.stripe-currency-label {
+  @apply text-sm font-medium text-slate-700 mb-3;
+}
+
+.stripe-currency-toggle {
+  @apply flex flex-wrap gap-2 mb-2;
+}
+
+.stripe-currency-btn {
+  @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 text-sm font-medium
+    text-slate-700 bg-white hover:border-slate-300 transition-colors;
+}
+
+.stripe-currency-btn-active {
+  @apply border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/40;
+}
+
+.stripe-exchange-rate {
+  @apply text-xs text-slate-400 mb-8;
+}
+
+.stripe-product-row {
+  @apply flex items-start justify-between gap-4 py-5 border-t border-slate-100;
+}
+
+.stripe-product-name {
+  @apply font-semibold text-slate-900;
+}
+
+.stripe-product-desc {
+  @apply text-sm text-slate-500 mt-1;
+}
+
+.stripe-product-price {
+  @apply font-semibold text-slate-900 shrink-0;
+}
+
+.stripe-total-row {
+  @apply flex items-center justify-between pt-5 border-t border-slate-200 font-bold text-slate-900;
+}
+
+.stripe-checkout-form-wrap {
+  @apply bg-white p-8 sm:p-10;
+}
+
+.stripe-form-section {
+  @apply mb-6;
+}
+
+.stripe-checkout-form h2 {
+  @apply text-[15px] font-semibold text-[#30313d] mb-3;
+}
+
+.stripe-field-label {
+  @apply block text-[13px] font-medium text-[#6d7e94] mb-1.5;
+}
+
+.stripe-field {
+  @apply w-full px-3 py-3 rounded-[5px] border border-[#e0e6eb] text-[15px] text-[#30313d]
+    outline-none transition-shadow focus:border-[#0570de] focus:ring-[3px] focus:ring-[#0570de]/20 mb-3 bg-white shadow-sm;
+}
+
+.stripe-field-select {
+  @apply appearance-none cursor-pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236d7e94' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 2.25rem;
+}
+
+.stripe-method-tab {
+  @apply flex items-center gap-2.5 w-full px-4 py-3 rounded-[5px] border border-[#0570de] text-[15px] font-medium text-[#0570de] bg-white mb-4;
+}
+
+.stripe-method-tab-active {
+  @apply ring-[3px] ring-[#0570de]/15;
+}
+
+.stripe-card-group {
+  @apply rounded-[5px] border border-[#e0e6eb] overflow-hidden mb-3 shadow-sm;
+}
+
+.stripe-card-number-row {
+  @apply relative flex items-center border-b border-[#e0e6eb];
+}
+
+.stripe-card-input {
+  @apply w-full px-3 py-3 text-[15px] text-[#30313d] outline-none bg-white placeholder:text-[#aab7c4];
+}
+
+.stripe-card-input:focus {
+  @apply bg-[#f6f9fc];
+}
+
+.stripe-card-number-row .stripe-card-input {
+  @apply pr-36;
+}
+
+.stripe-card-brands {
+  @apply absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none;
+}
+
+.stripe-brand {
+  @apply text-[9px] font-bold px-1 py-0.5 rounded border leading-none;
+}
+
+.stripe-brand-visa {
+  @apply text-[#1a1f71] border-[#1a1f71]/30 bg-white;
+}
+
+.stripe-brand-mc {
+  @apply text-[#eb001b] border-[#eb001b]/30 bg-white;
+}
+
+.stripe-brand-amex {
+  @apply text-[#006fcf] border-[#006fcf]/30 bg-white;
+}
+
+.stripe-brand-discover {
+  @apply text-[#ff6000] border-[#ff6000]/30 bg-white;
+}
+
+.stripe-card-bottom-row {
+  @apply grid grid-cols-[1fr_1fr_auto] items-center;
+}
+
+.stripe-card-expiry {
+  @apply border-r border-[#e0e6eb];
+}
+
+.stripe-card-cvc {
+  @apply border-r border-[#e0e6eb];
+}
+
+.stripe-cvc-hint {
+  @apply px-3 text-[#aab7c4] flex items-center;
+}
+
+.stripe-save-info {
+  @apply flex items-start gap-3 mb-5 cursor-pointer select-none;
+}
+
+.stripe-save-info input {
+  @apply mt-1 w-4 h-4 rounded border-[#c4ccd8] text-[#0570de] focus:ring-[#0570de];
+}
+
+.stripe-save-info strong {
+  @apply block text-[14px] font-medium text-[#30313d];
+}
+
+.stripe-save-info small {
+  @apply block text-[13px] text-[#6d7e94] mt-1 leading-snug;
+}
+
+.stripe-pay-btn {
+  @apply w-full py-3.5 rounded-[5px] bg-[#0570de] hover:bg-[#005ecb] text-white text-[16px] font-semibold
+    shadow-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+.stripe-checkout-footer {
+  @apply flex flex-wrap items-center justify-center gap-2 text-[13px] text-[#6d7e94] mt-5;
+}
+
+.stripe-checkout-footer strong {
+  @apply font-semibold text-[#30313d];
+}
+
+.stripe-checkout-footer a {
+  @apply text-[#6d7e94] hover:text-[#30313d] hover:underline;
+}
+
+.stripe-footer-divider {
+  @apply text-[#c4ccd8];
+}
+
+.stripe-powered {
+  @apply text-center text-xs text-slate-400 mt-4;
+}
+
+.stripe-cancel-link {
+  @apply block text-center text-sm text-slate-500 hover:text-violet-600 mt-6;
+}
+
+/* Admin transaction detail modal */
+.admin-tx-row {
+  @apply cursor-pointer transition-colors hover:bg-violet-50/60 dark:hover:bg-violet-500/5;
+}
+
+.admin-tx-modal-backdrop {
+  @apply fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4;
+}
+
+.admin-tx-modal {
+  @apply w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700
+    shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto;
+}
+
+.admin-tx-modal-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.admin-tx-modal-header h2 {
+  @apply text-xl font-bold text-slate-900 dark:text-white;
+}
+
+.admin-tx-modal-close {
+  @apply p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors;
+}
+
+.admin-tx-detail-grid {
+  @apply grid grid-cols-1 gap-4;
+}
+
+.admin-tx-detail-grid div {
+  @apply border-b border-slate-100 dark:border-slate-800 pb-3;
+}
+
+.admin-tx-detail-grid dt {
+  @apply text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1;
+}
+
+.admin-tx-detail-grid dd {
+  @apply text-sm font-medium text-slate-900 dark:text-slate-100;
+}
+
+/* Admin user detail modal */
+.admin-user-modal {
+  @apply w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700
+    shadow-2xl max-h-[90vh] overflow-hidden flex flex-col;
+}
+
+.admin-user-detail-body {
+  @apply overflow-y-auto px-6 sm:px-8 pb-8 space-y-6;
+}
+
+.admin-detail-section h3 {
+  @apply text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center;
+}
+
+.admin-user-profile-head {
+  @apply flex items-start gap-4 mb-5;
+}
+
+.admin-user-avatar {
+  @apply w-14 h-14 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0;
+}
+
+.admin-user-avatar-fallback {
+  @apply flex items-center justify-center bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 font-bold text-xl;
+}
+
+.admin-user-name {
+  @apply text-lg font-bold text-slate-900 dark:text-white;
+}
+
+.admin-user-email {
+  @apply text-sm text-slate-500 dark:text-slate-400;
+}
+
+.admin-user-badges {
+  @apply flex flex-wrap gap-2 mt-2;
+}
+
+.admin-nested-list {
+  @apply space-y-3;
+}
+
+.admin-nested-card {
+  @apply rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-800/40 p-4;
+}
+
+.admin-opp-mini-grid {
+  @apply grid grid-cols-2 sm:grid-cols-3 gap-3 mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-700/80;
+}
+
+.admin-opp-mini-grid dt {
+  @apply text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-0.5;
+}
+
+.admin-opp-mini-grid dd {
+  @apply text-sm text-slate-800 dark:text-slate-200;
+}
+
+.admin-applications-sublist {
+  @apply mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 space-y-2;
+}
+
+.admin-application-row {
+  @apply flex items-start justify-between gap-3 rounded-lg bg-white dark:bg-slate-900/60 px-3 py-2 border border-slate-100 dark:border-slate-700/60;
+}
+
+.admin-empty-note {
+  @apply text-sm text-slate-500 dark:text-slate-400 italic;
+}
+
+.admin-filter-tabs {
+  @apply flex flex-wrap gap-2;
+}
+
+.admin-filter-tab {
+  @apply px-4 py-2 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300
+    border border-slate-200 dark:border-slate-700 hover:border-violet-300 transition-colors;
+}
+
+.admin-filter-tab.active {
+  @apply bg-violet-600 text-white border-violet-600;
+}
+
+.admin-action-btn {
+  @apply mt-4 px-4 py-2 rounded-lg text-sm font-semibold transition-colors;
+}
+
+.admin-action-block {
+  @apply bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400;
+}
+
+.admin-action-unblock {
+  @apply bg-emerald-50 text-emerald-600 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400;
+}
+
+.admin-user-modal .admin-tx-modal-header {
+  @apply px-6 sm:px-8 pt-6 sm:pt-8 shrink-0 mb-0;
+}
+
+.admin-startup-card {
+  @apply transition-colors hover:border-violet-300 dark:hover:border-violet-500/40 hover:shadow-md;
 }

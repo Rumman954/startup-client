@@ -23,7 +23,14 @@ const OpportunityDetails = () => {
 
   const handleApply = async (e) => {
     e.preventDefault();
-    if (!user) return navigate('/login', { state: { from: { pathname: `/opportunities/${id}` } } });
+    if (!user) {
+      return navigate('/login', {
+        state: {
+          from: { pathname: `/opportunities/${id}` },
+          applyPrompt: true,
+        },
+      });
+    }
     if (user.role !== 'collaborator') return toast.error('Only collaborators can apply');
 
     setSubmitting(true);

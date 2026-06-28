@@ -211,7 +211,7 @@ const Home = () => {
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     <h3 className="font-bold text-lg text-slate-900 dark:text-white">{startup.startup_name}</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">By {startup.founder_email.split('@')[0]}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">By {startup.founder_name || 'Founder'}</p>
                     <span className="inline-block mt-2 px-3 py-1 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-medium rounded-full w-fit">
                       {startup.industry}
                     </span>
@@ -247,8 +247,15 @@ const Home = () => {
             <p className="text-center text-slate-500 dark:text-slate-400">No opportunities posted yet.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {opportunities.map((opp) => (
-                <div key={opp._id} className="card h-full flex flex-col p-6">
+              {opportunities.map((opp, i) => (
+                <motion.div
+                  key={opp._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="card h-full flex flex-col p-6"
+                >
                   <h3 className="font-bold text-lg text-slate-900 dark:text-white">{opp.role_title}</h3>
                   <p className="text-sm text-orange-500 font-medium mt-1">{opp.startup_id?.startup_name || 'Startup'}</p>
                   <div className="flex flex-wrap gap-1 mt-3">
@@ -262,7 +269,7 @@ const Home = () => {
                   <Link to={`/opportunities/${opp._id}`} className="mt-3 text-orange-500 text-sm font-semibold hover:underline">
                     Apply Now →
                   </Link>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}

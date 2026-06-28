@@ -36,6 +36,7 @@ const BrowseStartups = () => {
               </div>
               <div className="p-6 flex-1 flex flex-col">
                 <h3 className="font-bold text-lg text-slate-900 dark:text-white">{startup.startup_name}</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">By {startup.founder_name || 'Founder'}</p>
                 <span className="inline-block mt-2 badge-orange w-fit">{startup.industry}</span>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mt-3 flex-1 line-clamp-3">{startup.description}</p>
                 <div className="mt-4 flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">

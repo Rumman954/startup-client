@@ -17,6 +17,8 @@ import OpportunityDetails from './pages/OpportunityDetails';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCheckout from './pages/PaymentCheckout';
+import PremiumPlan from './pages/PremiumPlan';
 import NotFound from './pages/NotFound';
 import FounderOverview from './pages/founder/FounderOverview';
 import MyStartup from './pages/founder/MyStartup';
@@ -35,7 +37,26 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-right"
+            containerStyle={{ top: 24, right: 24 }}
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#0f172a',
+                color: '#f8fafc',
+                borderRadius: '12px',
+                padding: '14px 18px',
+                boxShadow: '0 12px 40px rgba(15, 23, 42, 0.35)',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#34d399',
+                  secondary: '#0f172a',
+                },
+              },
+            }}
+          />
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Home />} />
@@ -49,6 +70,8 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="premium" element={<PrivateRoute roles={['founder']}><PremiumPlan /></PrivateRoute>} />
+            <Route path="payment-checkout" element={<PrivateRoute roles={['founder']}><PaymentCheckout /></PrivateRoute>} />
             <Route path="payment-success" element={<PrivateRoute roles={['founder']}><PaymentSuccess /></PrivateRoute>} />
             <Route path="*" element={<NotFound />} />
           </Route>

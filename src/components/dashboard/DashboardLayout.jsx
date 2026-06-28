@@ -30,9 +30,9 @@ const DashboardLayout = ({ type }) => {
   ];
 
   const links = type === 'founder' ? founderLinks : type === 'admin' ? adminLinks : collaboratorLinks;
-  const isFounder = type === 'founder';
+  const useVioletTheme = type === 'founder' || type === 'admin';
 
-  const founderNavClass = ({ isActive }) =>
+  const violetNavClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
       isActive
         ? 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300'
@@ -46,13 +46,13 @@ const DashboardLayout = ({ type }) => {
         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-orange-500 dark:hover:text-orange-400'
     }`;
 
-  const navClass = isFounder ? founderNavClass : defaultNavClass;
+  const navClass = useVioletTheme ? violetNavClass : defaultNavClass;
   const userAvatar = user?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=8b5cf6&color=fff`;
 
   return (
-    <div className={`dashboard-shell ${isFounder ? 'founder-dashboard-shell' : ''}`}>
-      <aside className={isFounder ? 'founder-sidebar' : 'premium-sidebar'}>
-        {isFounder ? (
+    <div className={`dashboard-shell ${useVioletTheme ? 'founder-dashboard-shell' : ''}`}>
+      <aside className={useVioletTheme ? 'founder-sidebar' : 'premium-sidebar'}>
+        {useVioletTheme ? (
           <>
             <div className="p-6 border-b border-slate-100 dark:border-slate-800">
               <Link to="/" className="inline-flex">
@@ -136,7 +136,7 @@ const DashboardLayout = ({ type }) => {
                   className={({ isActive }) =>
                     `px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                       isActive
-                        ? isFounder
+                        ? useVioletTheme
                           ? 'bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300'
                           : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md shadow-orange-500/20'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -150,7 +150,7 @@ const DashboardLayout = ({ type }) => {
           </div>
           <ThemeToggle />
         </div>
-        <div className={`p-4 md:p-8 lg:p-10 text-slate-900 dark:text-slate-100 ${isFounder ? 'founder-dashboard-main' : ''}`}>
+        <div className={`p-4 md:p-8 lg:p-10 text-slate-900 dark:text-slate-100 ${useVioletTheme ? 'founder-dashboard-main founder-dashboard-page' : ''}`}>
           <Outlet />
         </div>
       </div>

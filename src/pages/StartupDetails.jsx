@@ -36,7 +36,7 @@ const StartupDetails = () => {
             </div>
             <p className="text-slate-600 dark:text-slate-300 mt-5 leading-relaxed">{startup.description}</p>
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div><span className="text-slate-500 dark:text-slate-400">Founder:</span> <span className="font-semibold text-slate-800 dark:text-slate-200">{startup.founder_email}</span></div>
+              <div><span className="text-slate-500 dark:text-slate-400">Founder:</span> <span className="font-semibold text-slate-800 dark:text-slate-200">{startup.founder_name || startup.founder_email}</span></div>
               <div><span className="text-slate-500 dark:text-slate-400">Team Size Needed:</span> <span className="font-semibold text-slate-800 dark:text-slate-200">{startup.team_size_needed || 5}</span></div>
             </div>
           </div>

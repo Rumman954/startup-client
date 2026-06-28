@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signUp, signIn } from '../lib/auth';
+import { signUp, signIn, signInWithGoogle } from '../lib/auth';
 import { useAuth } from '../context/AuthContext';
 import { fileToBase64 } from '../lib/uploadImage';
 import { checkApiHealth, formatAuthError } from '../lib/authErrors';
@@ -36,6 +36,7 @@ const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', image: '', role: 'collaborator' });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
   const [imageError, setImageError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -50,9 +51,20 @@ const Register = () => {
     const file = e.target.files[0];
     if (!file) return;
     setImageFile(file);
+    setImageUrl('');
     setImageError('');
     setForm((f) => ({ ...f, image: URL.createObjectURL(file) }));
   };
+
+  const handleImageUrlChange = (e) => {
+    const url = e.target.value;
+    setImageUrl(url);
+    setImageFile(null);
+    setImageError('');
+    setForm((f) => ({ ...f, image: url }));
+  };
+
+  const isValidImageUrl = (url) => /^https?:\/\/.+/i.test(url?.trim());
 
   const handleGoDashboard = () => {
     setSuccessOpen(false);
@@ -78,8 +90,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!imageFile) {
-      setImageError('Profile image is required. Please upload a photo before creating your account.');
+    const trimmedUrl = imageUrl.trim();
+    if (!imageFile && !isValidImageUrl(trimmedUrl)) {
+      setImageError('Upload a profile image or paste a valid image URL (https://...).');
       toast.error('Profile image is required');
       return;
     }
@@ -92,7 +105,7 @@ const Register = () => {
 
     setLoading(true);
     try {
-      const imageBase64 = await fileToBase64(imageFile);
+      const imageBase64 = imageFile ? await fileToBase64(imageFile) : undefined;
 
       const result = await signUp.email({
         email: form.email,
@@ -105,7 +118,7 @@ const Register = () => {
         name: form.name,
         email: form.email,
         role: form.role,
-        imageBase64,
+        ...(imageBase64 ? { imageBase64 } : { image: trimmedUrl }),
       });
       await issueJwt();
 
@@ -131,10 +144,7 @@ const Register = () => {
         return;
       }
       sessionStorage.setItem('pendingRole', form.role);
-      await signIn.social({
-        provider: 'google',
-        callbackURL: `${window.location.origin}/dashboard`,
-      });
+      await signInWithGoogle(`${window.location.origin}/dashboard`);
     } catch (err) {
       toast.error(formatAuthError(err, 'Google registration failed. Check GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in server/.env.'));
     }
@@ -240,13 +250,27 @@ const Register = () => {
                 }`}
               >
                 <FiImage size={18} className={imageError ? 'text-red-400 shrink-0' : 'text-orange-400 shrink-0'} />
-                <span className="truncate">{imageFile ? imageFile.name : 'Upload Profile Image *'}</span>
+                <span className="truncate">{imageFile ? imageFile.name : 'Upload profile image'}</span>
               </button>
+              <div className="flex items-center gap-3 my-3">
+                <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
+                <span className="text-xs font-semibold text-slate-400 uppercase">or</span>
+                <span className="h-px flex-1 bg-slate-200 dark:bg-slate-700" />
+              </div>
+              <IconField
+                icon={FiImage}
+                type="url"
+                placeholder="https://example.com/photo.jpg"
+                value={imageUrl}
+                onChange={handleImageUrlChange}
+              />
               {imageError ? (
                 <p className="text-xs text-red-500 dark:text-red-400 mt-1.5 font-semibold">{imageError}</p>
-              ) : !imageFile ? (
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">A profile photo is required to create your account.</p>
-              ) : null}
+              ) : (
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+                  Upload a file (ImgBB) or paste an image URL.
+                </p>
+              )}
               {form.image && (
                 <img
                   src={form.image}
